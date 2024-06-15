@@ -1,0 +1,26 @@
+
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(î¡®Šşÿÿÿÿ8²ßÇ±2J$a3fdf89f-f24f-414d-ba00-0ce3e81ce138
+¦
+java:S1488,"^Immediately return this expression instead of assigning it to the temporary variable "person".(õ›¨Êÿÿÿÿÿ8¶ßÇ±2J$2001135e-e1a2-483f-bee8-ff8055543449
+˜
+java:S1192*"PDefine a constant instead of duplicating this literal "Person with id " 3 times.(óí…šøÿÿÿÿ8¸ßÇ±2J$b34239e0-0105-4548-b509-8ff10ea5e5d0
+¡
+java:S1192*"YDefine a constant instead of duplicating this literal " does not exist in DB!!!" 3 times.(óí…šøÿÿÿÿ8¹ßÇ±2J$ee200228-d1bb-4d43-9876-296f635d7974
+d
+java:S1170"!Make this final field static too.(ÊøÒ¢8¼ßÇ±2J$11c3ac0b-a498-4a8d-898c-f413266ac51c
+i
+java:S1170"!Make this final field static too.(ÀÒ³êÿÿÿÿÿ8½ßÇ±2J$3b3f1663-95f8-4e67-ab1a-0c298cff9d86
+i
+java:S1170"!Make this final field static too.(µ”¤úÿÿÿÿ8½ßÇ±2J$41fe99a0-1569-4aaa-b983-8b68703c24d1
+£
+java:S3252"[Use static access with "by.toukach.restservlet.mapper.MapperPersonToUpdate" for "INSTANCE".(ÀÒ³êÿÿÿÿÿ8ÄßÇ±2J$33231aad-5200-46cf-8b74-aa0d86d35174
+}
+java:S1854":Remove this useless assignment to local variable "person".(¾­•†8ÄßÇ±2J$a54cb452-2b87-41a6-8a2d-ec03b1d962f1
+n
+java:S1481"+Remove this unused "person" local variable.(¾­•†8ÆßÇ±2J$d9f852e2-6b8c-49cf-a107-5590448209df
+r	java:S106*"+Replace this use of System.out by a logger.(óí…šøÿÿÿÿ8ÊßÇ±2J$8a4192c2-2d8b-4765-88b0-3650b18768e0
+ƒ	java:S125-"<This block of commented-out lines of code should be removed.(¨È¡úúÿÿÿÿ8ËßÇ±2J$93c9b432-245d-4f6c-8d1e-500a55c6f44d
+r	java:S1066"+Replace this use of System.out by a logger.(óí…šøÿÿÿÿ8ÎßÇ±2J$cb3c05d9-70b5-4085-be90-9f67a4b43045
+r	java:S106C"+Replace this use of System.out by a logger.(ôÕ¼›şÿÿÿÿ8ÔßÇ±2J$e3af9cd2-ac85-44a0-b25c-9ff0930baa6b
+y
+java:S1068"1Remove this unused "mapperSection" private field.(µ”¤úÿÿÿÿ8×ßÇ±2J$ae2d5ecf-a6d0-4970-8e66-1abc3b6fc907

@@ -1,0 +1,9 @@
+
+}
+java:S1118":Add a private constructor to hide the implicit public one.(×Ú€Î8¤§ğ®2J$448e5d5f-f922-472c-9281-c1810c8f6be3
+z
+java:S1068"2Remove this unused "FIND_BY_ID_SQL" private field.(¼×÷Úúÿÿÿÿ8®§ğ®2J$933e9d03-2aed-4a15-b000-53d255d560d9
+|
+java:S1068$":Remove this unused "FIND_ALL_BY_USERID_SQL" private field.(û¹™8¯§ğ®2J$6b6a73b7-803e-4cda-bbe5-5e93aec7d4be
+
+java:S1068("<Remove this unused "DELETE_ALL_BY_USERID_SQL" private field.(ŒûóŠ8¯§ğ®2J$538ba40b-b509-40d4-8b85-0c4221c57f84

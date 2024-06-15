@@ -1,0 +1,18 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(û„––8šïº±2J$047febcd-c887-4432-a7bc-b55739869e1b
+
+java:S2789Ç"FEnsure this "Optional" could never be null and remove this null-check.(ì·›•şÿÿÿÿ8§ïº±2J$ae5c50a4-a23e-43b6-bbca-9973d2985c2d
+œ
+java:S3655È"XCall "existNumbers.isPresent()" or "!existNumbers.isEmpty()" before accessing the value.(€ ¬8×§¼±2J$de896e0d-2fb3-432c-a164-b19e58ee44f2
+Å
+java:S1186™"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Õ®ï›8µïº±2J$7d739938-d135-4d91-84e7-ccd01baa88aa
+€
+java:S1144‡"<Remove this unused private "saveOrUpdateExistNumber" method.(ê’àó8Äïº±2J$610a6a74-e24c-44e4-bfe0-5db9d756ac3f
+
+java:S1144™"=Remove this unused private "saveOrUpdateExitsSection" method.(Õ®ï›8Äïº±2J$72f51a4b-8865-4dc9-b42d-3cddfde2a69d
+o
+java:S19054"'Remove this unnecessary cast to "long".(€œ·«ûÿÿÿÿ8Ñïº±2J$68c93cf0-b3da-48ca-a1d3-d2894efcd684
+x
+java:S1172™"4Remove this unused method parameter "personSection".(Õ®ï›8ğº±2J$39b277f5-ea21-4d1c-af34-4f3a59f6679d
+…
+java:S1068"=Remove this unused "personToSectionRepository" private field.(¹ÙÊ¨üÿÿÿÿ8¬Ÿ»±2J$e2c8919d-2095-4f55-b94d-a5c81a5c8d75

@@ -1,0 +1,17 @@
+
+k
+java:S1185"(Remove this method to simply inherit it.(¹Â·Š8”‡„˜€2J$53e845df-3d73-4c19-84e1-7564f153cea2
+¢
+java:S1989"_Handle the following exceptions that could be thrown by "doGet": ServletException, IOException.(Ôü™—8–‡„˜€2J$d77b550a-145c-44b8-b6da-7784fa739652
+k
+java:S1185"(Remove this method to simply inherit it.(üª¼í8—‡„˜€2J$71ea33d3-1166-4a6c-8b1b-9e99d76db238
+¨
+java:S1989"`Handle the following exceptions that could be thrown by "doPost": ServletException, IOException.(Í†»Öúÿÿÿÿ8š‡„˜€2J$b4c98643-e45f-4515-a84b-3b0e6ada248b
+k
+java:S1185"(Remove this method to simply inherit it.(ğÿä—8š‡„˜€2J$2302411e-d7e4-4d03-8211-19c869efc26f
+¢
+java:S1989"_Handle the following exceptions that could be thrown by "doPut": ServletException, IOException.(»’²ï8œ‡„˜€2J$c14fa6a6-d2ed-4999-af22-59da05613c22
+p
+java:S1185 "(Remove this method to simply inherit it.(–àËµÿÿÿÿÿ8‡„˜€2J$2597fd03-d94a-450f-9022-0bba1724ae82
+¥
+java:S1989!"bHandle the following exceptions that could be thrown by "doDelete": ServletException, IOException.(ÌÂ«8Ÿ‡„˜€2J$2455b976-f123-499c-bd32-81996acd6896

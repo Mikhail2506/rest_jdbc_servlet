@@ -1,0 +1,15 @@
+
+‚
+java:S1488"eImmediately return this expression instead of assigning it to the temporary variable "personSection".(‹’Ùã8å¶–¦2
+
+java:S1488"[Immediately return this expression instead of assigning it to the temporary variable "dto".(Û»ú8»“¦2J$ff2b67a0-a4df-485d-889f-22e76bc04b1b
+¬
+java:S1488"iImmediately return this expression instead of assigning it to the temporary variable "personSectionList".(Ëö³Û8 »“¦2J$d4d6138d-4088-4e17-9205-681abcf81358
+¯
+java:S1488$"lImmediately return this expression instead of assigning it to the temporary variable "personSectionDTOList".(÷ê’8¢»“¦2J$170bc96c-d666-4059-8ea0-91c0501412c0
+i
+java:S1170"!Make this final field static too.(µ”¤úÿÿÿÿ8®»“¦2J$f897c389-fe55-4fa5-8cb3-20ff84faa584
+x
+java:S1068"0Remove this unused "objectMapper" private field.(­ãĞåüÿÿÿÿ8ä¼“¦2J$d9bf47c4-f5da-4806-93d1-7b7c12926bff
+y
+java:S1068"1Remove this unused "mapperSection" private field.(µ”¤úÿÿÿÿ8ë¼“¦2J$94cb51ca-2ad0-4bed-8f47-1684346c217c

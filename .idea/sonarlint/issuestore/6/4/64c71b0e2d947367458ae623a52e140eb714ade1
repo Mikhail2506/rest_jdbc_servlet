@@ -1,0 +1,40 @@
+
+K
+java:S1948".Make "personMapper" transient or serializable.(Ô¬Ş’8å†¡²2
+O
+java:S1948"2Make "personRepository" transient or serializable.(ıœš¹8å†¡²2
+[
+java:S1948!"9Make "personToUpdateDTOMapper" transient or serializable.(î½™òüÿÿÿÿ8æ†¡²2
+ƒ	java:S125$"<This block of commented-out lines of code should be removed.(èĞ¼ıÿÿÿÿ8Ò·µ°2J$48fbb6b3-70ab-4152-b618-d78a9efbedf9
+
+java:S1854="9Remove this useless assignment to local variable "query".(å³¢»ıÿÿÿÿ8Ö·µ°2J$02b1be4a-d7a2-4e74-b351-279e5ab2f2dc
+‚
+java:S1854;":Remove this useless assignment to local variable "action".(·şÓÊùÿÿÿÿ8Ö·µ°2J$299a6fd8-f410-4df2-8167-324fd7fda417
+s
+java:S1481;"+Remove this unused "action" local variable.(·şÓÊùÿÿÿÿ8Ù·µ°2J$a5b56563-8c56-41b3-8e16-d484cd4a3d1a
+ƒ	java:S125<"<This block of commented-out lines of code should be removed.(Â¢Œ¡ûÿÿÿÿ8Ù·µ°2J$2310a096-ec0f-4ed6-affa-7efb427035ac
+r
+java:S1481="*Remove this unused "query" local variable.(å³¢»ıÿÿÿÿ8Ú·µ°2J$50509187-ff8c-467e-82cf-a9d348502df0
+~	java:S125>"<This block of commented-out lines of code should be removed.(”‚æ8Û·µ°2J$c69dbd76-3158-49cf-8978-a2809b5a14d2
+ƒ	java:S125B"<This block of commented-out lines of code should be removed.(ê§¿Äşÿÿÿÿ8Û·µ°2J$f72bfe1c-e615-478e-891d-820f01cdd782
+˜
+java:S1989D"PHandle the following exception that could be thrown by "getWriter": IOException.(¿—Èœùÿÿÿÿ8Û·µ°2J$cd03b709-ae97-4191-8e05-1e8efa3ab8d7
+ƒ	java:S125K"<This block of commented-out lines of code should be removed.(ŸüÑÓüÿÿÿÿ8ß·µ°2J$11b437d0-eb90-49b4-95b9-2e270817eb37
+ƒ	java:S125S"<This block of commented-out lines of code should be removed.(ìÌŒ¦ûÿÿÿÿ8á·µ°2J$a1f6598f-3a33-4615-8a9f-3fd1041119bc
+}	java:S125["<This block of commented-out lines of code should be removed.(ºÚç98ã·µ°2J$41950b57-a78f-4ec0-aa66-e499750dc00b
+‘
+java:S1989h"NHandle the following exception that could be thrown by "getJson": IOException.(¥ÖÃæ8æ·µ°2J$a29cced7-2f5c-4f13-b646-87fdfb89597a
+˜
+java:S1989t"PHandle the following exception that could be thrown by "getWriter": IOException.(¿—Èœùÿÿÿÿ8é·µ°2J$e1b528f7-d77d-4259-a856-88e695eaaf1a
+‘
+java:S1989|"NHandle the following exception that could be thrown by "getJson": IOException.(¥ÖÃæ8í·µ°2J$65afc9ac-c265-44f4-95fc-b453242df6d6
+™
+java:S1989ˆ"PHandle the following exception that could be thrown by "getWriter": IOException.(¿—Èœùÿÿÿÿ8ñ·µ°2J$d37110d1-9287-449f-b12a-c82434729397
+~	java:S125’"<This block of commented-out lines of code should be removed.(Œ¬¢18ù·µ°2J$1c8d6fd6-9a1e-4ad9-8509-3fc0fdd78cbe
+™
+java:S1989"PHandle the following exception that could be thrown by "getWriter": IOException.(¿—Èœùÿÿÿÿ8ü·µ°2J$8275a26f-e3a3-4b79-b113-0d62859b42e7
+„	java:S125£"<This block of commented-out lines of code should be removed.(‘ïµøÿÿÿÿ8€¸µ°2J$4715af2f-32fc-4180-83cf-c7425a1d96e5
+„	java:S125Ğ"<This block of commented-out lines of code should be removed.(‘Ò¯ıÿÿÿÿ8¸µ°2J$86a93f9c-ce3a-42ef-9711-f3618c5a832c
+	java:S125Ş"<This block of commented-out lines of code should be removed.(‡¶æ8‚¸µ°2J$aa3d1200-b6c8-488c-ac0d-0d444647aef2
+ 
+java:S2226!"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(î½™òüÿÿÿÿ8‚¸µ°2J$81159a9a-c72b-4170-8fbc-1b0fd4a82dde

@@ -1,0 +1,13 @@
+
+ 
+java:S1488"^Immediately return this expression instead of assigning it to the temporary variable "person".(É·S8í½¯ª2J$4dc6f505-d491-4ca5-9133-63178829dcb1
+£
+java:S1488"[Immediately return this expression instead of assigning it to the temporary variable "dto".(Èş¶³ûÿÿÿÿ8î½¯ª2J$f3d6a4a0-ed87-4e94-a946-3d693817f0e6
+·
+java:S1488$"oImmediately return this expression instead of assigning it to the temporary variable "entityToUpdateDtoToList".(æœî¥ÿÿÿÿÿ8î½¯ª2J$45bb7e6a-21e6-4759-96b2-05cfd07674b5
+¤
+java:S1488-"bImmediately return this expression instead of assigning it to the temporary variable "personList".(‹•ç58î½¯ª2J$fe06fa09-5aa1-467f-9627-532d9888bb43
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ï½¯ª2J$ffea6ba9-c0e7-48d7-ad55-c2cb828b58a5
+g	java:S112?"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8óè¼ª2
+i
+java:S1170"!Make this final field static too.(×–šÓşÿÿÿÿ8ò½¯ª2J$7031d016-2d83-498a-89b9-cd28cf5385f3
