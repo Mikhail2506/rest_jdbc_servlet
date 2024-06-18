@@ -3,13 +3,12 @@ package by.toukach.restservlet.controller;
 import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.dto.PersonToUpdateDTO;
 import by.toukach.restservlet.entity.Person;
-import by.toukach.restservlet.mapper.PersonMapper;
+import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
 import by.toukach.restservlet.repository.PersonRepository;
 import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
 import by.toukach.restservlet.service.PersonService;
 import by.toukach.restservlet.service.serviceImpl.PersonServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,22 +20,17 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-//@WebServlet("/persons")
-@WebServlet(urlPatterns = {"/person/*"})
+@WebServlet("/persons")
 public class PersonsServlet extends HttpServlet {
 
-    private final PersonMapper personMapper = new PersonMapper();
-    private final PersonService personService = new PersonServiceImpl();
+    private final PersonMapperImpl personMapperImpl = new PersonMapperImpl();
+    private final transient PersonService personService = PersonServiceImpl.getInstance();
     private final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
     private final ObjectMapper objectMapper;
 
     public PersonsServlet() {
         this.objectMapper = new ObjectMapper();
     }
-
-//    public PersonsServlet(ObjectMapper objectMapper) {
-//        this.objectMapper = objectMapper;
-//    }
 
     @Override
     public void init() {
@@ -59,7 +53,7 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJsonHeader(resp);
         String responseAnswer = "";
 
@@ -83,9 +77,9 @@ public class PersonsServlet extends HttpServlet {
 //               String responseAnswer = personMapper.toString(dto);
 //                printWriter.write(personMapper.(dto));
 
-                PersonDTO dto = personMapper.entityToDto(personService.readPerson(id));
+                PersonDTO dto = personMapperImpl.entityToDto(personService.readPerson(id));
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = personMapper.mapperDTOToJson(dto);
+                responseAnswer = personMapperImpl.mapperDTOToJson(dto);
                 // printWriter.write(responseAnswer);
             }
         } catch (Exception e) {
@@ -97,11 +91,11 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJsonHeader(resp);
         String json = getJson(req);
 
-        String responseAnswer = null;
+        String responseAnswer = "";
         Optional<PersonDTO> dto;
         try {
             dto = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
@@ -117,7 +111,7 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJsonHeader(resp);
         String json = getJson(req);
 
@@ -137,7 +131,7 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJsonHeader(resp);
         String responseAnswer = "";
         try {

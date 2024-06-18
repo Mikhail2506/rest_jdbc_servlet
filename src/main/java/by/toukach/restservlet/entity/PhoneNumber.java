@@ -2,21 +2,21 @@ package by.toukach.restservlet.entity;
 
 public class PhoneNumber extends AbstractEntity {
 
-    private Long id;
+    private Long phoneNumberId;
     private String number;
     private Person person;
 
     public PhoneNumber() {
     }
 
-    public PhoneNumber(Long id, String number, Person person) {
-        this.id = id;
+    public PhoneNumber(Long phoneNumberId, String number, Person person) {
+        this.phoneNumberId = phoneNumberId;
         this.number = number;
         this.person = person;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPhoneNumberId() {
+        return phoneNumberId;
     }
 
     public String getNumber() {
@@ -35,12 +35,4 @@ public class PhoneNumber extends AbstractEntity {
         this.person = person;
     }
 
-    @Override
-    public String toString() {
-        return "PhoneNumber{" +
-               "id=" + id +
-               ", number='" + number + '\'' +
-               ", person=" + person +
-               '}';
-    }
 }

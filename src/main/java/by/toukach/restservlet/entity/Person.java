@@ -9,104 +9,94 @@ import java.util.List;
 
 public class Person extends AbstractEntity {
 
-    private final PhoneNumbersRepository phoneNumbersRepository =  PhoneNumbersRepositoryImpl.getInstance();
-    private final PersonSectionsRepository personSectionsRepository =  PersonSectionsRepositoryImpl.getInstance();
+    private final PhoneNumbersRepository phoneNumbersRepository =
+            PhoneNumbersRepositoryImpl.getInstance();
+    private final PersonSectionsRepository personSectionsRepository =
+            PersonSectionsRepositoryImpl.getInstance();
 
-    private Long id;
+    private Long personId;
 
-    private String name;
+    private String personName;
 
-    private String surname;
+    private String personSurname;
 
-    private int age;
+    private Long personAge;
 
-    List<PhoneNumber> phoneNumberList;
+    List<PhoneNumber> phoneNumbersList;
 
-    List<PersonSection> personsSectionsList;
+    List<PersonSection> personSectionsList;
 
     public Person() {
     }
 
-    public Person(String name, String surname, int age) {
+//    public Person(String name, String surname, int age) {
+//        super();
+//        this.name = name;
+//        this.surname = surname;
+//        this.age = age;
+//    }
+
+    public Person(Long personId, String personName, String personSurname, Long personAge,
+                  List<PhoneNumber> phoneNumbersList, List<PersonSection> personSectionsList) {
         super();
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
+        this.personId = personId;
+        this.personName = personName;
+        this.personSurname = personSurname;
+        this.personAge = personAge;
+        this.phoneNumbersList = phoneNumbersList;
+        this.personSectionsList = personSectionsList;
     }
 
-    public Person(Long id, String name, String surname, int age,
-                  List<PhoneNumber> phoneNumberList, List<PersonSection> personsSectionsList) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.phoneNumberList = phoneNumberList;
-        this.personsSectionsList = personsSectionsList;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public long getId() {
-        return id;
+    public String getPersonName() {
+        return personName;
     }
 
-    public String getName() {
-        return name;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPersonSurname() {
+        return personSurname;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setPersonSurname(String personSurname) {
+        this.personSurname = personSurname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public Long getPersonAge() {
+        return personAge;
     }
 
-    public int getAge() {
-        return age;
+    public void setPersonAge(Long personAge) {
+        this.personAge = personAge;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<PhoneNumber> getPhoneNumberList() {
-        if (phoneNumberList == null) {
-            this.phoneNumberList = phoneNumbersRepository.findAll(this.id);
+    public List<PhoneNumber> getPhoneNumbersList() {
+        if (phoneNumbersList == null) {
+            this.phoneNumbersList = phoneNumbersRepository.findAllByPersonId(this.personId);
         }
-        return phoneNumberList;
+        return phoneNumbersList;
     }
 
-    public void setPhoneNumberList(List<PhoneNumber> phoneNumberList) {
-        this.phoneNumberList = phoneNumberList;
+    public void setPhoneNumbersList(List<PhoneNumber> phoneNumbersList) {
+        this.phoneNumbersList = phoneNumbersList;
     }
 
-    public List<PersonSection> getPersonsSectionsList() {
-        if (personsSectionsList == null) {
-//            this.personsSectionsList = personSectionsRepository.findAll(this.getId());
-            this.personsSectionsList = personSectionsRepository.findAll();
+    public List<PersonSection> getPersonSectionsList() {
+        if (personSectionsList == null) {
+            this.personSectionsList = personSectionsRepository.findAllBYPersonId(this.personId);
+
         }
-        return personsSectionsList;
+        return personSectionsList;
     }
 
     public void setPersonsSections(List<PersonSection> personsSectionsList) {
-        this.personsSectionsList = personsSectionsList;
+        this.personSectionsList = personsSectionsList;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-               "phoneNumbersRepository=" + phoneNumbersRepository +
-               ", personSectionsRepository=" + personSectionsRepository +
-               ", id=" + id +
-               ", name='" + name + '\'' +
-               ", surname='" + surname + '\'' +
-               ", age=" + age +
-               ", phoneNumberList=" + phoneNumberList +
-               ", personsSectionsList=" + personsSectionsList +
-               '}';
-    }
+
 }

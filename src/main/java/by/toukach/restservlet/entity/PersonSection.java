@@ -7,23 +7,24 @@ import java.util.List;
 
 public class PersonSection extends AbstractEntity {
 
-    private final PersonSectionsRepository personSectionsRepositoryImpl =  PersonSectionsRepositoryImpl.getInstance();
+    private static final PersonSectionsRepository personSectionsRepositoryImpl =
+            PersonSectionsRepositoryImpl.getInstance();
 
-    Long id;
+    Long sectionId;
     String name;
-    List<Person> persons;
+    List<Person> personsList;
 
     public PersonSection() {
     }
 
-    public PersonSection(Long id, String name, List<Person> persons) {
-        this.id = id;
+    public PersonSection(Long sectionId, String name, List<Person> personsList) {
+        this.sectionId = sectionId;
         this.name = name;
-        this.persons = persons;
+        this.personsList = personsList;
     }
 
-    public Long getId() {
-        return id;
+    public Long getSectionId() {
+        return sectionId;
     }
 
     public String getName() {
@@ -34,16 +35,16 @@ public class PersonSection extends AbstractEntity {
         this.name = name;
     }
 
-    public List<Person> getPersons() {
-        if (persons == null) {
-            this.persons = personSectionsRepositoryImpl.findPersonsBySectionId(this.id);
+    public List<Person> getPersonsList() {
+        if (personsList == null) {
+            this.personsList = personSectionsRepositoryImpl.findPersonsBySectionId(this.sectionId);
         }
-        return persons;
+        return personsList;
     }
 
-    public void setPersons(List<Person> persons) {
+    public void setPersons(List<Person> personsList) {
 
-        this.persons = persons;
+        this.personsList = personsList;
     }
 }
 

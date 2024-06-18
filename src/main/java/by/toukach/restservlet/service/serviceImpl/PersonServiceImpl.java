@@ -5,9 +5,6 @@ import by.toukach.restservlet.dto.PersonToUpdateDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.exception.NotFoundException;
 import by.toukach.restservlet.mapper.MapperPerson;
-import by.toukach.restservlet.mapper.MapperPersonSection;
-import by.toukach.restservlet.mapper.MapperPersonToUpdate;
-import by.toukach.restservlet.mapper.PersonToUpdateDTOMapper;
 import by.toukach.restservlet.repository.PersonRepository;
 import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
 import by.toukach.restservlet.service.PersonService;
@@ -20,7 +17,18 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
     private final MapperPerson mapperPerson = MapperPerson.INSTANCE;
     private final MapperPersonToUpdate mapperPersonToUpdate = PersonToUpdateDTOMapper.INSTANCE;
-    private final MapperPersonSection mapperSection = MapperPersonSection.INSTANCE;
+//    private final MapperPersonSection mapperSection = MapperPersonSection.INSTANCE;
+    private static PersonService instance;
+
+    private PersonServiceImpl() {
+    }
+
+    public static synchronized PersonService getInstance() {
+        if (instance == null) {
+            instance = new PersonServiceImpl();
+        }
+        return instance;
+    }
 
     @Override
     public PersonDTO addPerson(PersonDTO personDTO) {
@@ -58,13 +66,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void updatePerson(PersonToUpdateDTO personDtoToUpdate) {
-        if (personDtoToUpdate == null || personDtoToUpdate.getId() == null) {
+        if (personDtoToUpdate == null || personDtoToUpdate.getPersonId() == null) {
             throw new IllegalArgumentException();
         }
         try {
-            checkExistPerson(personDtoToUpdate.getId());
+            checkExistPerson(personDtoToUpdate.getPersonId());
         } catch (NotFoundException e) {
-            System.out.println("Person with id " + personDtoToUpdate.getId() + " does not exist in DB!!!");
+            System.out.println("Person with id " + personDtoToUpdate.getPersonId() + " does not exist in DB!!!");
         }
         personRepository.update(mapperPersonToUpdate.dtoToUpdateToEntity(personDtoToUpdate));
     }

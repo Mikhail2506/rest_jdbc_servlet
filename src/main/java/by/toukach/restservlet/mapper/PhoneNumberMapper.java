@@ -1,47 +1,23 @@
 package by.toukach.restservlet.mapper;
 
 import by.toukach.restservlet.dto.PhoneNumberDTO;
+import by.toukach.restservlet.dto.PhoneNumberToUpdateDTO;
 import by.toukach.restservlet.entity.PhoneNumber;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.mapstruct.Mapper;
 
-import java.io.IOException;
 import java.util.List;
 
-public class PhoneNumberMapper implements MapperPhoneNumber {
+@Mapper
+public interface PhoneNumberMapper {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    PhoneNumber map(PhoneNumberDTO phoneNumberDTO);
 
-    @Override
-    public PhoneNumber dtoToEntity(PhoneNumberDTO dto) {
-        PhoneNumber phoneNumber = MapperPhoneNumber.INSTANCE.dtoToEntity(dto);
-        return phoneNumber;
-    }
+    PhoneNumberDTO map(PhoneNumber phoneNumber);
 
-    @Override
-    public PhoneNumberDTO entityToDto(PhoneNumber entity) {
-        PhoneNumberDTO dto = MapperPhoneNumber.INSTANCE.entityToDto(entity);
-        return dto;
-    }
+    List<PhoneNumberDTO> map(List<PhoneNumber> phoneNumberList);
 
-    @Override
-    public List<PhoneNumberDTO> entityToDtoList(List<PhoneNumber> phoneNumberList) {
-        List<PhoneNumberDTO> phoneNumberDTOList = MapperPhoneNumber.INSTANCE.entityToDtoList(phoneNumberList);
-        return phoneNumberDTOList;
-    }
+    List<PhoneNumber> mapUpdateList(List<PhoneNumberToUpdateDTO> phoneNumberToUpdateDTOList);
 
-    @Override
-    public List<PhoneNumber> dtoToEntityList(List<PhoneNumberDTO> phoneNumberDTOList) {
-        List<PhoneNumber> phoneNumberList = MapperPhoneNumber.INSTANCE.dtoToEntityList(phoneNumberDTOList);
-        return phoneNumberList;
-    }
+    PhoneNumber map(PhoneNumberToUpdateDTO phoneNumberToUpdateDTO);
 
-    public String mapperDTOToJson(PhoneNumberDTO dto) {
-        try {
-            return objectMapper.writeValueAsString(dto);
-        } catch (IOException e) {
-            throw new RuntimeException("Error converting Person to JSON", e);
-        }
-    }
 }
-

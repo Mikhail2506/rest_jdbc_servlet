@@ -14,6 +14,7 @@ import static by.toukach.restservlet.db.PhoneNumbersDBQueries.*;
 
 public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
 
+
     private static PhoneNumbersRepository instance;
     private PhoneNumbersRepositoryImpl() {
     }
@@ -51,7 +52,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
             if (phoneNumber.getPerson() == null) {
                 preparedStatement.setNull(2, Types.NULL);
             } else {
-                preparedStatement.setLong(2, phoneNumber.getPerson().getId());
+                preparedStatement.setLong(2, phoneNumber.getPerson().getPersonId());
             }
             preparedStatement.executeUpdate();
 
@@ -79,9 +80,9 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
             if (phoneNumber.getPerson() == null) {
                 preparedStatement.setNull(2, Types.NULL);
             } else {
-                preparedStatement.setLong(2, phoneNumber.getPerson().getId());
+                preparedStatement.setLong(2, phoneNumber.getPerson().getPersonId());
             }
-            preparedStatement.setLong(3, phoneNumber.getId());
+            preparedStatement.setLong(3, phoneNumber.getPhoneNumberId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,7 +141,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     }
 
     @Override
-    public List<PhoneNumber> findAll(Long id) {
+    public List<PhoneNumber> findAllByPersonId(Long id) {
         List<PhoneNumber> phoneNumberList = new CopyOnWriteArrayList<>();
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL)) {

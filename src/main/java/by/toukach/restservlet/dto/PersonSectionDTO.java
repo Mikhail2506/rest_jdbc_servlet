@@ -6,49 +6,33 @@ import java.util.List;
 
 public class PersonSectionDTO extends AbstractDTO {
 
-    //private Long id;
-
     private String section;
 
-   // private List<Person> person;
+    private List<PersonDTO> personDTOList;
+
+    public PersonSectionDTO() {
+
+    }
+
+    public PersonSectionDTO(String section, List<PersonDTO> personDTOList) {
+
+        this.section = section;
+        this.personDTOList = personDTOList;
+    }
 
     public String getSection() {
         return section;
     }
 
-    public PersonSectionDTO(Long id, String section, List<Person> person) {
-       // this.id = id;
-        this.section = section;
-        //this.person = person;
-    }
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-
     public void setSection(String section) {
         this.section = section;
     }
 
-//    public List<Person> getPerson() {
-//        return person;
-//    }
-//
-//    public void setPerson(List<Person> person) {
-//        this.person = person;
-//    }
+    public List<PersonDTO> getPersonDTOList() {
+        return personDTOList;
+    }
 
-
-    @Override
-    public String toString() {
-        return "PersonSectionDTO{" +
-              // "id=" + id +
-               ", section='" + section + '\'' +
-              // ", person=" + person +
-               '}';
+    public void setPersonDTOList(List<PersonDTO> personDTOList) {
+        this.personDTOList = personDTOList;
     }
 }

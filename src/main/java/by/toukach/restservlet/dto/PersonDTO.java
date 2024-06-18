@@ -4,47 +4,70 @@ import java.util.List;
 
 public class PersonDTO extends AbstractDTO {
 
-    private String name;
+    private String personName;
 
-    private String surname;
+    private String personSurname;
 
-    private int age;
+    private int personAge;
 
-    List<PhoneNumberDTO> phoneNumberDTOS;
+    private List<PhoneNumberDTO> phoneNumberDTOList;
 
-    List<PersonSectionDTO> personSectionDTO;
+    private List<PersonSectionDTO> personSectionDTOList;
 
-
-    @Override
-    public String toString() {
-        return "PersonDTO{" +
-               "name='" + name + '\'' +
-               ", surname='" + surname + '\'' +
-               ", age=" + age +
-               '}';
+    public PersonDTO() {
     }
 
-    public String getName() {
-        return name;
+    public PersonDTO(String personName, String personSurname, int personAge,
+                     List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
+
+        this.personName = personName;
+        this.personSurname = personSurname;
+        this.personAge = personAge;
+        this.phoneNumberDTOList = phoneNumberDTOList;
+        this.personSectionDTOList = personSectionDTOList;
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public String getPersonSurname() {
+        return personSurname;
     }
 
-    public int getAge() {
-        return age;
+    public void setPersonSurname(String personSurname) {
+        this.personSurname = personSurname;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public int getPersonAge() {
+        return personAge;
     }
+
+    public void setPersonAge(int personAge) {
+        this.personAge = personAge;
+    }
+
+    public List<PhoneNumberDTO> getPhoneNumberDTOList() {
+        return phoneNumberDTOList;
+    }
+
+    public void setPhoneNumberDTOList(List<PhoneNumberDTO> phoneNumberDTOList) {
+        this.phoneNumberDTOList = phoneNumberDTOList;
+    }
+
+    public List<PersonSectionDTO> getPersonSectionDTOList() {
+        return personSectionDTOList;
+    }
+
+    public void setPersonSectionDTOList(List<PersonSectionDTO> personSectionDTOList) {
+        this.personSectionDTOList = personSectionDTOList;
+    }
+
+
+
 }

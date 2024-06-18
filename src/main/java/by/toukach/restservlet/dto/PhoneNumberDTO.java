@@ -4,24 +4,13 @@ import by.toukach.restservlet.entity.Person;
 
 public class PhoneNumberDTO extends AbstractDTO {
 
-    private Long id;
-
     private String number;
 
     private Person person;
 
-    public PhoneNumberDTO(Long id, String number, Person person) {
-        this.id = id;
+    public PhoneNumberDTO(String number, Person person) {
         this.number = number;
         this.person = person;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNumber() {

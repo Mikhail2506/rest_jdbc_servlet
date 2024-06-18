@@ -17,7 +17,7 @@ public interface PhoneNumbersRepository {
 
     Optional<PhoneNumber> findByNumber(String number);
 
-    List<PhoneNumber> findAll(Long id);
+    List<PhoneNumber> findAllByPersonId(Long id);
 
     boolean exitsById(int id);
 }

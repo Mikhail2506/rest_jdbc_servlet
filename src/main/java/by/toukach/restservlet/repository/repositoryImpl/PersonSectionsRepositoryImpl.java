@@ -32,8 +32,6 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
         return instance;
     }
 
-    //PersonRepository personRepository = new PersonRepositoryImpl();
-
     private static PersonSection createPersonSection(ResultSet resultSet) throws SQLException {
 
         PersonSection personSection = new PersonSection(
@@ -73,7 +71,7 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
 
             preparedStatement.setString(1, personSection.getName());
-            preparedStatement.setLong(2, personSection.getId());
+            preparedStatement.setLong(2, personSection.getSectionId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -96,7 +94,7 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
         return deleteResult;
     }
 
-    public List<PersonSection> findAll() {
+    public List<PersonSection> findAllBYPersonId() {
         PersonSection personSection = null;
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {

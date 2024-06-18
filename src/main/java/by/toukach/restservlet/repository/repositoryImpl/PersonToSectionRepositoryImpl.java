@@ -1,6 +1,7 @@
 package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
+import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;

@@ -8,10 +8,6 @@ public interface Mapper<D extends AbstractDTO, E extends AbstractEntity> {
 
     D mapperJsonToDTO(String json);
 
-//    E mapperDTOToEntity(D dto);
-//
-//    D mapperEntityToDto(E entity);
-
     String mapperDTOToJson(D dto);
 
 

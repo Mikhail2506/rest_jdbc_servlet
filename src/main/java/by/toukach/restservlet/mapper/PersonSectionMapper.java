@@ -1,39 +1,23 @@
 package by.toukach.restservlet.mapper;
 
-import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.dto.PersonSectionDTO;
-import by.toukach.restservlet.entity.Person;
+import by.toukach.restservlet.dto.PersonSectionToUpdateDTO;
 import by.toukach.restservlet.entity.PersonSection;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 
-public class PersonSectionMapper implements MapperPersonSection {
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final MapperPersonSection mapperSection = MapperPersonSection.INSTANCE;
+@Mapper
+public interface PersonSectionMapper {
 
-    @Override
-    public PersonSection dtoToEntity(PersonSectionDTO dto) {
-        PersonSection personSection = MapperPersonSection.INSTANCE.dtoToEntity(dto);
-        return personSection;
-    }
+    PersonSection map(PersonSectionToUpdateDTO personSectionToUpdateDTO);
 
-    @Override
-    public PersonSectionDTO entityToDto(PersonSection entity) {
-        PersonSectionDTO dto = MapperPersonSection.INSTANCE.entityToDto(entity);
-        return dto;
-    }
+    PersonSectionDTO map(PersonSection personSection);
 
-    @Override
-    public List<PersonSection> dtoToEntityList(List<PersonSectionDTO> personSectionDTOList) {
-        List<PersonSection> personSectionList = MapperPersonSection.INSTANCE.dtoToEntityList(personSectionDTOList);
-        return personSectionList;
-    }
+    PersonSection map(PersonSectionToUpdateDTO personSectionToUpdateDTO);
 
-    @Override
-    public List<PersonSectionDTO> entityToDtoList(List<PersonSection> personSectionList) {
-        List<PersonSectionDTO> personSectionDTOList = MapperPersonSection.INSTANCE.entityToDtoList(personSectionList);
-        return personSectionDTOList;
-    }
+    List<PersonSectionDTO> map(List<PersonSection> personSectionList);
+
+    List<PersonSection> mapUpdateList(List<PersonSectionToUpdateDTO> personSectionToUpdateDTOList);
+
 }

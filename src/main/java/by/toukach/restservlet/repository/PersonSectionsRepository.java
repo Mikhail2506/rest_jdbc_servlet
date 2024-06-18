@@ -15,7 +15,7 @@ public interface PersonSectionsRepository{
 
     boolean deleteById(Long id);
 
-    List<PersonSection> findAll();
+    List<PersonSection> findAllBYPersonId();
 
     boolean exitsById(Long id);
 
@@ -24,4 +24,6 @@ public interface PersonSectionsRepository{
     Optional<PersonSection> findById(Long id);
 
     PersonToSection save(PersonToSection personToSection);
+
+    List<PersonSection> findAllBYPersonId(Long id);
 }

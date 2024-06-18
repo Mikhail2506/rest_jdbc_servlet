@@ -42,25 +42,25 @@ public class PersonRepositoryImpl implements PersonRepository {
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, person.getName());
-            preparedStatement.setString(2, person.getSurname());
+            preparedStatement.setString(1, person.getPersonName());
+            preparedStatement.setString(2, person.getPersonSurname());
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 person = new Person(
                         (long) resultSet.getLong("id"),
-                        person.getName(),
-                        person.getSurname(),
-                        person.getAge(),
+                        person.getPersonName(),
+                        person.getPersonSurname(),
+                        person.getPersonAge(),
                         null,
                         null
                 );
             }
             savePersonPhoneNumbers(person);
             savePersonsSections(person);
-            person.getPhoneNumberList();
-            person.getPersonsSectionsList();
+            person.getPhoneNumbersList();
+            person.getPersonSectionsList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,54 +68,54 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     private void savePersonsSections(Person person) {
-        if (person.getPersonsSectionsList() != null && !person.getPersonsSectionsList().isEmpty()) {
+        if (person.getPersonSectionsList() != null && !person.getPersonSectionsList().isEmpty()) {
             List<Long> personSectionsIdList = new ArrayList<>(
-                    person.getPersonsSectionsList()
+                    person.getPersonSectionsList()
                             .stream()
-                            .map(PersonSection::getId)
+                            .map(PersonSection::getSectionId)
                             .toList()
             );
-            List<PersonSection> existsSectionList = personSectionsRepository.findAll();
+            List<PersonSection> existsSectionList = personSectionsRepository.findAllBYPersonId();
             for (PersonSection per : existsSectionList) {
-                if (!personSectionsIdList.contains(per.getId())) {
-                    personSectionsRepository.deleteById(person.getId());
+                if (!personSectionsIdList.contains(per.getSectionId())) {
+                    personSectionsRepository.deleteById(person.getPersonId());
                 }
-                personSectionsIdList.remove(person.getId());
+                personSectionsIdList.remove(person.getPersonId());
             }
             for (Long sectionId : personSectionsIdList) {
-                if (!personSectionsRepository.exitsById(person.getId())) {
+                if (!personSectionsRepository.exitsById(person.getPersonId())) {
                     PersonToSection personToSection = new PersonToSection(
                             null,
-                            person.getId(),
+                            person.getPersonId(),
                             sectionId);
                     personSectionsRepository.save(personToSection);
                 }
             }
         } else {
-            personSectionsRepository.deleteById(person.getId());
+            personSectionsRepository.deleteById(person.getPersonId());
         }
     }
 
     private void savePersonPhoneNumbers(Person person) {
-        if (person.getPhoneNumberList() != null && !person.getPhoneNumberList().isEmpty()) {
-            List<PhoneNumber> phoneNumberList = new ArrayList<>(person.getPhoneNumberList());
+        if (person.getPhoneNumbersList() != null && !person.getPhoneNumbersList().isEmpty()) {
+            List<PhoneNumber> phoneNumberList = new ArrayList<>(person.getPhoneNumbersList());
             List<Long> existsPhoneNumberIdList = new ArrayList<>(
-                    phoneNumbersRepository.findAll(person.getId())
+                    phoneNumbersRepository.findAllByPersonId(person.getPersonId())
                             .stream()
-                            .map(PhoneNumber::getId)
+                            .map(PhoneNumber::getPhoneNumberId)
                             .toList()
             );
 
             for (int i = 0; i < phoneNumberList.size(); i++) {
                 PhoneNumber phoneNumber = phoneNumberList.get(i);
                 phoneNumber.setPerson(person);
-                if (existsPhoneNumberIdList.contains(phoneNumber.getId())) {
+                if (existsPhoneNumberIdList.contains(phoneNumber.getPhoneNumberId())) {
                     phoneNumbersRepository.update(phoneNumber);
                 } else {
                     saveOrUpdateExitsNumber(phoneNumber);
                 }
                 phoneNumberList.set(i, null);
-                existsPhoneNumberIdList.remove(phoneNumber.getId());
+                existsPhoneNumberIdList.remove(phoneNumber.getPhoneNumberId());
             }
             phoneNumberList
                     .stream()
@@ -128,7 +128,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                     .stream()
                     .forEach(phoneNumbersRepository::deleteById);
         } else {
-            phoneNumbersRepository.deleteById(person.getId());
+            phoneNumbersRepository.deleteById(person.getPersonId());
         }
     }
 
@@ -139,7 +139,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                 && exitNumber.get().getPerson() != null
                 //&& exitNumber.get().getPerson().get() > 0)
             ) {
-                phoneNumber = new PhoneNumber(exitNumber.get().getId(),
+                phoneNumber = new PhoneNumber(exitNumber.get().getPhoneNumberId(),
                         exitNumber.get().getNumber(),
                         exitNumber.get().getPerson()
                 );
@@ -156,25 +156,25 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     private void savePhoneNumberList(Person person) {
 
-        if (person.getPhoneNumberList() != null && !person.getPhoneNumberList().isEmpty()) {
-            List<PhoneNumber> phoneNumberList = new ArrayList<>(person.getPhoneNumberList());
+        if (person.getPhoneNumbersList() != null && !person.getPhoneNumbersList().isEmpty()) {
+            List<PhoneNumber> phoneNumberList = new ArrayList<>(person.getPhoneNumbersList());
             List<Long> existsPhoneNumberIdList = new ArrayList<>(
-                    phoneNumbersRepository.findAll(person.getId())
+                    phoneNumbersRepository.findAllByPersonId(person.getPersonId())
                             .stream()
-                            .map(PhoneNumber::getId)
+                            .map(PhoneNumber::getPhoneNumberId)
                             .toList()
             );
 
             for (int i = 0; i < phoneNumberList.size(); i++) {
                 PhoneNumber phoneNumber = phoneNumberList.get(i);
                 phoneNumber.setPerson(person);
-                if (existsPhoneNumberIdList.contains(phoneNumber.getId())) {
+                if (existsPhoneNumberIdList.contains(phoneNumber.getPhoneNumberId())) {
                     phoneNumbersRepository.update(phoneNumber);
                 } else {
                     saveOrUpdateExitsNumber(phoneNumber);
                 }
                 phoneNumberList.set(i, null);
-                existsPhoneNumberIdList.remove(phoneNumber.getId());
+                existsPhoneNumberIdList.remove(phoneNumber.getPhoneNumberId());
             }
             phoneNumberList
                     .stream()
@@ -185,9 +185,9 @@ public class PersonRepositoryImpl implements PersonRepository {
                     });
             existsPhoneNumberIdList
                     .stream()
-                    .forEach((Consumer<? super Long>) phoneNumbersRepository.findAll(person.getId()));
+                    .forEach((Consumer<? super Long>) phoneNumbersRepository.findAllByPersonId(person.getPersonId()));
         } else {
-            phoneNumbersRepository.deleteById(person.getId());
+            phoneNumbersRepository.deleteById(person.getPersonId());
         }
     }
 
@@ -198,7 +198,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             Optional<PhoneNumber> existNumbers = phoneNumbersRepository.findByNumber(phoneNumber.getNumber());
             if ((existNumbers != null)
                 && (existNumbers.get().getPerson() != null)) {
-                phoneNumber = new PhoneNumber(existNumbers.get().getId(),
+                phoneNumber = new PhoneNumber(existNumbers.get().getPhoneNumberId(),
                         existNumbers.get().getNumber(),
                         existNumbers.get().getPerson()
                 );
@@ -214,9 +214,9 @@ public class PersonRepositoryImpl implements PersonRepository {
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
 
-            preparedStatement.setString(1, person.getName());
-            preparedStatement.setString(2, person.getSurname());
-            preparedStatement.setLong(4, person.getId());
+            preparedStatement.setString(1, person.getPersonName());
+            preparedStatement.setString(2, person.getPersonSurname());
+            preparedStatement.setLong(4, person.getPersonId());
 
             preparedStatement.executeUpdate();
             savePhoneNumberList(person);

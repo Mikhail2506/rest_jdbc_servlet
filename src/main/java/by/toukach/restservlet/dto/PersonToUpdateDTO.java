@@ -4,53 +4,53 @@ import java.util.List;
 
 public class PersonToUpdateDTO extends AbstractDTO {
 
-    private Long id;
-    private String name;
-    private String surname;
+    private Long personId;
+    private String personName;
+    private String personSurname;
+    private int personAge;
     private List<PhoneNumberToUpdateDTO> phoneNumberToUpdateDTOs;
-    private List<PersonSectionDtoToUpdate> personSectionToUpdateDTOs;
+    private List<PersonSectionToUpdateDTO> personSectionToUpdateDTOs;
 
-    public PersonToUpdateDTO() {
+    public PersonToUpdateDTO(Long personId, String personName, String personSurname, Long personAge, List<PhoneNumberToUpdateDTO> phoneNumberToUpdateDTOs, List<PersonSectionDTO> map) {
     }
 
-    public PersonToUpdateDTO(Long id, String name, String surname,
+    public PersonToUpdateDTO(long personId, String personName, String personSurname,
+                             int personAge,
                              List<PhoneNumberToUpdateDTO> phoneNumberToUpdateDTOs,
-                             List<PersonSectionDtoToUpdate> personSectionToUpdateDTOs) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+                             List<PersonSectionToUpdateDTO> personSectionToUpdateDTOs) {
+        this.personId = personId;
+        this.personName = personName;
+        this.personSurname = personSurname;
+        this.personAge = personAge;
         this.phoneNumberToUpdateDTOs = phoneNumberToUpdateDTOs;
         this.personSectionToUpdateDTOs = personSectionToUpdateDTOs;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public String getName() {
-        return name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPersonSurname() {
+        return personSurname;
+    }
+
+    public int getPersonAge() {
+        return personAge;
+    }
+
+    public void setPersonAge(int personAge) {
+        this.personAge = personAge;
     }
 
     public List<PhoneNumberToUpdateDTO> getPhoneNumberToUpdateDTOs() {
         return phoneNumberToUpdateDTOs;
     }
 
-    public List<PersonSectionDtoToUpdate> getPersonSectionToUpdateDTOs() {
+    public List<PersonSectionToUpdateDTO> getPersonSectionToUpdateDTOs() {
         return personSectionToUpdateDTOs;
-    }
-
-    @Override
-    public String toString() {
-        return "PersonToUpdateDTO{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", surname='" + surname + '\'' +
-               ", phoneNumberToUpdateDTOs=" + phoneNumberToUpdateDTOs +
-               ", personSectionToUpdateDTOs=" + personSectionToUpdateDTOs +
-               '}';
     }
 }
