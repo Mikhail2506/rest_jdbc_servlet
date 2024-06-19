@@ -1,6 +1,5 @@
 package by.toukach.restservlet.repository;
 
-import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
 
@@ -13,17 +12,17 @@ public interface PersonSectionsRepository{
 
     void update(PersonSection personSection);
 
-    boolean deleteById(Long id);
+    boolean deleteById(Long personSectionId);
 
-    List<PersonSection> findAllBYPersonId();
+    boolean exitsById(Long personSectionId);
 
-    boolean exitsById(Long id);
+    //List<PersonDTO> findPersonsBySectionId(Long personSectionId);
 
-    List<Person> findPersonsBySectionId(Long id);
-
-    Optional<PersonSection> findById(Long id);
+    Optional<PersonSection> findById(Long personSectionId);
 
     PersonToSection save(PersonToSection personToSection);
 
-    List<PersonSection> findAllBYPersonId(Long id);
+    List<PersonSection> findAllBYPersonId(Long personId);
+
+    List<PersonSection> findAll();
 }

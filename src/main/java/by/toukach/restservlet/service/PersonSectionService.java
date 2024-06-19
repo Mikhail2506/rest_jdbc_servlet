@@ -1,7 +1,6 @@
 package by.toukach.restservlet.service;
 
 import by.toukach.restservlet.dto.PersonSectionDTO;
-import by.toukach.restservlet.dto.PersonSectionToUpdateDTO;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.exception.NotFoundException;
 
@@ -9,9 +8,9 @@ import java.util.List;
 
 public interface PersonSectionService {
 
-    PersonSection save(PersonSectionToUpdateDTO personSectionToUpdateDTO) throws NotFoundException;
+    PersonSection save(PersonSectionDTO personSectionDTO) throws NotFoundException;
 
-    void update(PersonSectionToUpdateDTO personSectionToUpdateDTO) throws NotFoundException;
+    void update(PersonSectionDTO personSectionDTO) throws NotFoundException;
 
     PersonSectionDTO findById(Long personSectionId) throws NotFoundException;
 

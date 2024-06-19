@@ -1,9 +1,6 @@
 package by.toukach.restservlet.mapper.impl;
 
-
 import by.toukach.restservlet.dto.PersonDTO;
-import by.toukach.restservlet.dto.PersonToUpdateDTO;
-import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.PersonSectionMapper;
 import by.toukach.restservlet.mapper.PhoneNumberMapper;
@@ -27,48 +24,49 @@ public class PersonMapperImpl implements PersonMapper {
     }
 
     @Override
-    public Person map(PersonDTO personDTO) {
-        return new Person(
-                (Long) null,
+    public by.toukach.restservlet.entity.Person map(PersonDTO personDTO) {
+        return new by.toukach.restservlet.entity.Person(
+                personDTO.getPersonId(),
                 personDTO.getPersonName(),
                 personDTO.getPersonSurname(),
-                (long) personDTO.getPersonAge(),
-                phoneNumberMapper.map(personDTO.getPhoneNumberDTOList()),
-                personSectionMapper.mapUpdateList(personDTO.getPersonSectionDTOList())
+                personDTO.getPersonAge(),
+                phoneNumberMapper.mapUpdateList(personDTO.getPhoneNumberDTOList()),
+                personSectionMapper.mapUpdateDTOList(personDTO.getPersonSectionDTOList())
         );
     }
 
     @Override
-    public Person map(PersonToUpdateDTO personToUpdateDTO) {
-        return new Person(
-                personToUpdateDTO.getPersonId(),
-                personToUpdateDTO.getPersonName(),
-                personToUpdateDTO.getPersonSurname(),
-                personToUpdateDTO.getPersonAge(),
-                phoneNumberMapper.map(personToUpdateDTO.getPhoneNumberToUpdateDTOs()),//List<PhoneNumberDTO><-List<PhoneNumberToUpdateDTO>
-                personSectionMapper.mapUpdateList(personToUpdateDTO.getPersonSectionToUpdateDTOs())
-        );
-    }
-
-    @Override
-    public PersonToUpdateDTO map(Person person) {
-        return new PersonToUpdateDTO(
+    public PersonDTO map(by.toukach.restservlet.entity.Person person) {
+        return new PersonDTO(
                 person.getPersonId(),
                 person.getPersonName(),
                 person.getPersonSurname(),
                 person.getPersonAge(),
                 phoneNumberMapper.map(person.getPhoneNumbersList()),
-                personSectionMapper.map(person.getPersonSectionsList())
+                personSectionMapper.mapUpdateList(person.getPersonSectionList())
         );
     }
 
     @Override
-    public List<PersonToUpdateDTO> map(List<Person> personList) {
-        List<PersonToUpdateDTO> personToUpdateDTOList = new ArrayList<>();
-        for (Person person : personList) {
-            PersonToUpdateDTO personToUpdateDTO = map(person);
-            personToUpdateDTOList.add(personToUpdateDTO);
+    public List<by.toukach.restservlet.entity.Person> mapUpdateList(List<PersonDTO> personDTODTOList) {
+
+        List<by.toukach.restservlet.entity.Person> personList = new ArrayList<>();
+        for (PersonDTO personDTODTOAdd : personDTODTOList) {
+            by.toukach.restservlet.entity.Person person = map(personDTODTOAdd);
+            personList.add(person);
         }
-        return personToUpdateDTOList;
+        return personList;
     }
+
+    @Override
+    public List<PersonDTO> map(List<by.toukach.restservlet.entity.Person> personList) {
+
+        List<PersonDTO> personDTODTOList = new ArrayList<>();
+        for (by.toukach.restservlet.entity.Person personTOAdd : personList) {
+            PersonDTO personDTO = map(personTOAdd);
+            personDTODTOList.add(personDTO);
+        }
+        return personDTODTOList;
+    }
+
 }

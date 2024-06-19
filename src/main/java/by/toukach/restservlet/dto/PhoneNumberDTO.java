@@ -1,16 +1,17 @@
 package by.toukach.restservlet.dto;
 
-import by.toukach.restservlet.entity.Person;
-
-public class PhoneNumberDTO extends AbstractDTO {
+public class PhoneNumberDTO {
 
     private String number;
 
-    private Person person;
+    private PersonDTO personDTO;
 
-    public PhoneNumberDTO(String number, Person person) {
+    public PhoneNumberDTO(){
+    }
+
+    public PhoneNumberDTO(String number, PersonDTO personDTO) {
         this.number = number;
-        this.person = person;
+        this.personDTO = personDTO;
     }
 
     public String getNumber() {
@@ -21,11 +22,11 @@ public class PhoneNumberDTO extends AbstractDTO {
         this.number = number;
     }
 
-    public Person getPerson() {
-        return person;
+    public PersonDTO getPersonDTO() {
+        return personDTO;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(PersonDTO personDTO) {
+        this.personDTO = personDTO;
     }
 }

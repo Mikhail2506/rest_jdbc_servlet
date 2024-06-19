@@ -1,7 +1,6 @@
 package by.toukach.restservlet.mapper;
 
 import by.toukach.restservlet.dto.PersonSectionDTO;
-import by.toukach.restservlet.dto.PersonSectionToUpdateDTO;
 import by.toukach.restservlet.entity.PersonSection;
 import org.mapstruct.Mapper;
 
@@ -10,14 +9,11 @@ import java.util.List;
 @Mapper
 public interface PersonSectionMapper {
 
-    PersonSection map(PersonSectionToUpdateDTO personSectionToUpdateDTO);
+    PersonSection map(PersonSectionDTO personSectionDTO);
 
     PersonSectionDTO map(PersonSection personSection);
 
-    PersonSection map(PersonSectionToUpdateDTO personSectionToUpdateDTO);
+    List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList);
 
-    List<PersonSectionDTO> map(List<PersonSection> personSectionList);
-
-    List<PersonSection> mapUpdateList(List<PersonSectionToUpdateDTO> personSectionToUpdateDTOList);
-
+    List<PersonSectionDTO> mapUpdateList(List<PersonSection> personSectionList);
 }

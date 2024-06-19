@@ -1,50 +1,52 @@
 package by.toukach.restservlet.entity;
 
-import by.toukach.restservlet.repository.PersonSectionsRepository;
-import by.toukach.restservlet.repository.repositoryImpl.PersonSectionsRepositoryImpl;
+import by.toukach.restservlet.repository.PersonToSectionRepository;
+import by.toukach.restservlet.repository.repositoryImpl.PersonToSectionRepositoryImpl;
 
 import java.util.List;
 
-public class PersonSection extends AbstractEntity {
 
-    private static final PersonSectionsRepository personSectionsRepositoryImpl =
-            PersonSectionsRepositoryImpl.getInstance();
+public class PersonSection {
+
+    private static final PersonToSectionRepository personToSectionRepository =
+            PersonToSectionRepositoryImpl.getInstance();
 
     Long sectionId;
-    String name;
-    List<Person> personsList;
+    String sectionName;
+    List<Person> personList;
 
     public PersonSection() {
     }
 
-    public PersonSection(Long sectionId, String name, List<Person> personsList) {
+    public PersonSection(Long sectionId, String sectionName, List<Person> personList) {
         this.sectionId = sectionId;
-        this.name = name;
-        this.personsList = personsList;
+        this.sectionName = sectionName;
+        this.personList = personList;
     }
 
     public Long getSectionId() {
         return sectionId;
     }
 
-    public String getName() {
-        return name;
+    public String getSectionName() {
+        return sectionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
     }
 
-    public List<Person> getPersonsList() {
-        if (personsList == null) {
-            this.personsList = personSectionsRepositoryImpl.findPersonsBySectionId(this.sectionId);
+    public List<Person> getPersonList() {
+        if (personList == null) {
+            List<Person> personList = personToSectionRepository.findPersonsBySectionId(this.sectionId);
+
         }
-        return personsList;
+        return personList;
     }
 
-    public void setPersons(List<Person> personsList) {
+    public void setPersons(List<Person> personList) {
 
-        this.personsList = personsList;
+        this.personList = personList;
     }
 }
 

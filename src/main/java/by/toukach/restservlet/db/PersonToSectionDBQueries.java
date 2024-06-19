@@ -13,26 +13,26 @@ public class PersonToSectionDBQueries {
             """;
     public static final String DELETE_SQL = """
             DELETE FROM person_section
-            WHERE person_section_id = ? ;
+            WHERE persons_sections_id = ? ;
             """;
     private static final String FIND_BY_ID_SQL = """
-            SELECT person_section_id, person_id, section_id FROM person_section
-            WHERE person_section_id = ?
+            SELECT persons_sections_id, person_id, section_id FROM person_section
+            WHERE persons_sections_id = ?
             LIMIT 1;
             """;
     private static final String FIND_ALL_SQL = """
-            SELECT person_section_id, person_id, section_id FROM person_section;
+            SELECT persons_sections_id, person_id, section_id FROM person_section;
             """;
     public static final String FIND_ALL_BY_USERID_SQL = """
-            SELECT person_section_id, person_id, section_id FROM person_section
+            SELECT persons_sections_id, person_id, section_id FROM person_section
             WHERE person_id = ?;
             """;
     public static final String FIND_ALL_BY_DEPARTMENT_ID_SQL = """
-            SELECT person_section_id, person_id, section_id FROM person_section
+            SELECT persons_sections_id, person_id, section_id FROM person_section
             WHERE section_id = ?;
             """;
     public static final String FIND_BY_USERID_AND_DEPARTMENT_ID_SQL = """
-            SELECT person_section_id, person_id, section_id FROM person_section
+            SELECT persons_sections_id, person_id, section_id FROM person_section
             WHERE person_id = ? AND section_id = ?
             LIMIT 1;
             """;
@@ -44,11 +44,11 @@ public class PersonToSectionDBQueries {
             DELETE FROM person_section
             WHERE section_id = ?;
             """;
-    private static final String EXIST_BY_ID_SQL = """
+    public static final String EXIST_BY_ID_SQL = """
                 SELECT exists (
                 SELECT 1
                     FROM person_section
-                        WHERE person_section_id = ?
+                        WHERE persons_sections_id = ?
                         LIMIT 1);
             """;
 }

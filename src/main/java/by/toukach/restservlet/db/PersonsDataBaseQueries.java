@@ -3,7 +3,7 @@ package by.toukach.restservlet.db;
 public class PersonsDataBaseQueries {
 
     public static final String SAVE_SQL = """
-            INSERT INTO persons (user, surname, age)
+            INSERT INTO persons (name, surname, age)
             VALUES (?, ? ,?) ;
             """;
     public static final String UPDATE_SQL = """

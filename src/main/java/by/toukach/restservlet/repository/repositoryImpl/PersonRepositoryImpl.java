@@ -22,7 +22,7 @@ import static by.toukach.restservlet.db.PersonsDataBaseQueries.*;
 public class PersonRepositoryImpl implements PersonRepository {
 
     private static PersonRepository instance;
-    private final PersonToSectionRepository  personToSectionRepository = PersonToSectionRepositoryImpl.getInstance();
+    private final PersonToSectionRepository personToSectionRepository = PersonToSectionRepositoryImpl.getInstance();
     private final PhoneNumbersRepository phoneNumbersRepository = PhoneNumbersRepositoryImpl.getInstance();
     private final PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
 
@@ -44,6 +44,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
             preparedStatement.setString(1, person.getPersonName());
             preparedStatement.setString(2, person.getPersonSurname());
+            preparedStatement.setLong(3, person.getPersonAge());
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -60,30 +61,47 @@ public class PersonRepositoryImpl implements PersonRepository {
             savePersonPhoneNumbers(person);
             savePersonsSections(person);
             person.getPhoneNumbersList();
-            person.getPersonSectionsList();
+            person.getPersonSectionList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return person;
     }
 
+    @Override
+    public void update(Person person) {
+        try (Connection connection = ConnectionManager.open();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
+
+            preparedStatement.setString(1, person.getPersonName());
+            preparedStatement.setString(2, person.getPersonSurname());
+            preparedStatement.setLong(3, person.getPersonAge());
+
+            preparedStatement.executeUpdate();
+            savePhoneNumberList(person);
+            savePersonsSections(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void savePersonsSections(Person person) {
-        if (person.getPersonSectionsList() != null && !person.getPersonSectionsList().isEmpty()) {
-            List<Long> personSectionsIdList = new ArrayList<>(
-                    person.getPersonSectionsList()
+        if (person.getPersonSectionList() != null && !person.getPersonSectionList().isEmpty()) {
+            List<Long> personSectionIdList = new ArrayList<>(
+                    person.getPersonSectionList()
                             .stream()
                             .map(PersonSection::getSectionId)
                             .toList()
             );
-            List<PersonSection> existsSectionList = personSectionsRepository.findAllBYPersonId();
-            for (PersonSection per : existsSectionList) {
-                if (!personSectionsIdList.contains(per.getSectionId())) {
+            List<PersonToSection> existsSectionList = personToSectionRepository.findAllByPersonId(person.getPersonId());
+            for (PersonToSection per : existsSectionList) {
+                if (!personSectionIdList.contains(per.getSectionId())) {
                     personSectionsRepository.deleteById(person.getPersonId());
                 }
-                personSectionsIdList.remove(person.getPersonId());
+                personSectionIdList.remove(person.getPersonId());
             }
-            for (Long sectionId : personSectionsIdList) {
-                if (!personSectionsRepository.exitsById(person.getPersonId())) {
+            for (Long sectionId : personSectionIdList) {
+                if (personSectionsRepository.exitsById(person.getPersonId())) {
                     PersonToSection personToSection = new PersonToSection(
                             null,
                             person.getPersonId(),
@@ -92,7 +110,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                 }
             }
         } else {
-            personSectionsRepository.deleteById(person.getPersonId());
+            personToSectionRepository.deleteByPersonId(person.getPersonId());
         }
     }
 
@@ -130,28 +148,6 @@ public class PersonRepositoryImpl implements PersonRepository {
         } else {
             phoneNumbersRepository.deleteById(person.getPersonId());
         }
-    }
-
-    private void saveOrUpdateExistNumber(PhoneNumber phoneNumber) {
-        if (phoneNumbersRepository.exists(phoneNumber.getNumber())) {
-            Optional<PhoneNumber> exitNumber = phoneNumbersRepository.findByNumber(phoneNumber.getNumber());
-            if (exitNumber.isPresent()
-                && exitNumber.get().getPerson() != null
-                //&& exitNumber.get().getPerson().get() > 0)
-            ) {
-                phoneNumber = new PhoneNumber(exitNumber.get().getPhoneNumberId(),
-                        exitNumber.get().getNumber(),
-                        exitNumber.get().getPerson()
-                );
-                phoneNumbersRepository.update(phoneNumber);
-            }
-        } else {
-            phoneNumbersRepository.save(phoneNumber);
-        }
-    }
-
-    private void saveOrUpdateExitsSection(PersonSection personSection) {
-
     }
 
     private void savePhoneNumberList(Person person) {
@@ -197,7 +193,7 @@ public class PersonRepositoryImpl implements PersonRepository {
         if (phoneNumbersRepository.exists(phoneNumber.getNumber())) {
             Optional<PhoneNumber> existNumbers = phoneNumbersRepository.findByNumber(phoneNumber.getNumber());
             if ((existNumbers != null)
-                && (existNumbers.get().getPerson() != null)) {
+                    && (existNumbers.get().getPerson() != null)) {
                 phoneNumber = new PhoneNumber(existNumbers.get().getPhoneNumberId(),
                         existNumbers.get().getNumber(),
                         existNumbers.get().getPerson()
@@ -206,23 +202,6 @@ public class PersonRepositoryImpl implements PersonRepository {
             }
         } else {
             phoneNumbersRepository.save(phoneNumber);
-        }
-    }
-
-    @Override
-    public void update(Person person) {
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
-
-            preparedStatement.setString(1, person.getPersonName());
-            preparedStatement.setString(2, person.getPersonSurname());
-            preparedStatement.setLong(4, person.getPersonId());
-
-            preparedStatement.executeUpdate();
-            savePhoneNumberList(person);
-            savePersonsSections(person);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -267,7 +246,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                 personId,
                 resultSet.getString("name"),
                 resultSet.getString("surname"),
-                resultSet.getInt("age"),
+                resultSet.getLong("age"),
                 null,
                 null
         );
@@ -276,19 +255,19 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     public List<Person> findAll() {
 
-        List<Person> persons = new ArrayList<>();
+        List<Person> personList = new ArrayList<>();
 
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                persons.add(save((Person) resultSet));
+                personList.add(save((Person) resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return persons;
+        return personList;
     }
 
     @Override

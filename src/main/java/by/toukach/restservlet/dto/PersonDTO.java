@@ -2,13 +2,15 @@ package by.toukach.restservlet.dto;
 
 import java.util.List;
 
-public class PersonDTO extends AbstractDTO {
+public class PersonDTO {
+
+    private Long personId;
 
     private String personName;
 
     private String personSurname;
 
-    private int personAge;
+    private Long personAge;
 
     private List<PhoneNumberDTO> phoneNumberDTOList;
 
@@ -17,15 +19,19 @@ public class PersonDTO extends AbstractDTO {
     public PersonDTO() {
     }
 
-    public PersonDTO(String personName, String personSurname, int personAge,
+    public PersonDTO(Long personId, String personName, String personSurname, Long personAge,
                      List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
-
+        this.personId = personId;
         this.personName = personName;
         this.personSurname = personSurname;
         this.personAge = personAge;
         this.phoneNumberDTOList = phoneNumberDTOList;
         this.personSectionDTOList = personSectionDTOList;
 
+    }
+
+    public Long getPersonId() {
+        return personId;
     }
 
     public String getPersonName() {
@@ -44,19 +50,21 @@ public class PersonDTO extends AbstractDTO {
         this.personSurname = personSurname;
     }
 
-    public int getPersonAge() {
+    public Long getPersonAge() {
         return personAge;
     }
 
-    public void setPersonAge(int personAge) {
+    public void setPersonAge(Long personAge) {
         this.personAge = personAge;
     }
 
     public List<PhoneNumberDTO> getPhoneNumberDTOList() {
+
         return phoneNumberDTOList;
     }
 
     public void setPhoneNumberDTOList(List<PhoneNumberDTO> phoneNumberDTOList) {
+
         this.phoneNumberDTOList = phoneNumberDTOList;
     }
 
@@ -67,7 +75,4 @@ public class PersonDTO extends AbstractDTO {
     public void setPersonSectionDTOList(List<PersonSectionDTO> personSectionDTOList) {
         this.personSectionDTOList = personSectionDTOList;
     }
-
-
-
 }

@@ -1,7 +1,6 @@
 package by.toukach.restservlet.mapper.impl;
 
 import by.toukach.restservlet.dto.PersonSectionDTO;
-import by.toukach.restservlet.dto.PersonSectionToUpdateDTO;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.mapper.PersonSectionMapper;
 
@@ -22,22 +21,26 @@ public class PersonSectionMapperImpl implements PersonSectionMapper {
     }
 
     @Override
+    public PersonSection map(PersonSectionDTO personSectionDTO) {
+        return new PersonSection(
+                null,
+                personSectionDTO.getSectionName(),
+                null
+        );
+    }
+
+    @Override
     public PersonSectionDTO map(PersonSection personSection) {
         return null;
     }
 
     @Override
-    public PersonSection map(PersonSectionToUpdateDTO personSectionToUpdateDTO) {
-        return null;
-    }
-
-    @Override
-    public List<PersonSectionDTO> map(List<PersonSection> personSectionList) {
+    public List<PersonSectionDTO> mapUpdateList(List<PersonSection> personSectionList) {
         return List.of();
     }
 
     @Override
-    public List<PersonSection> mapUpdateList(List<PersonSectionToUpdateDTO> personSectionToUpdateDTOList) {
+    public List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList) {
         return List.of();
     }
 }

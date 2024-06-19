@@ -1,6 +1,6 @@
 package by.toukach.restservlet.entity;
 
-public class PhoneNumber extends AbstractEntity {
+public class PhoneNumber {
 
     private Long phoneNumberId;
     private String number;

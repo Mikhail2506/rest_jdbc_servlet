@@ -1,7 +1,6 @@
 package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
-import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
@@ -13,7 +12,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import static by.toukach.restservlet.db.PersonToSectionDBQueries.*;
+
 public class PersonToSectionRepositoryImpl implements PersonToSectionRepository {
 
     private static final PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
@@ -213,5 +214,23 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
             e.printStackTrace();
         }
         return personToSection;
+    }
+
+    @Override
+    public boolean exitsById(Long personId) {
+        boolean isExists = false;
+        try (Connection connection = ConnectionManager.open();
+             PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
+
+            preparedStatement.setLong(1, personId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                isExists = resultSet.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isExists;
     }
 }

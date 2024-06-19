@@ -7,7 +7,7 @@ import by.toukach.restservlet.repository.repositoryImpl.PhoneNumbersRepositoryIm
 
 import java.util.List;
 
-public class Person extends AbstractEntity {
+public class Person {
 
     private final PhoneNumbersRepository phoneNumbersRepository =
             PhoneNumbersRepositoryImpl.getInstance();
@@ -24,27 +24,20 @@ public class Person extends AbstractEntity {
 
     List<PhoneNumber> phoneNumbersList;
 
-    List<PersonSection> personSectionsList;
+    List<PersonSection> personSectionList;
 
     public Person() {
     }
 
-//    public Person(String name, String surname, int age) {
-//        super();
-//        this.name = name;
-//        this.surname = surname;
-//        this.age = age;
-//    }
-
     public Person(Long personId, String personName, String personSurname, Long personAge,
-                  List<PhoneNumber> phoneNumbersList, List<PersonSection> personSectionsList) {
+                  List<PhoneNumber> phoneNumbersList, List<PersonSection> personSectionList) {
         super();
         this.personId = personId;
         this.personName = personName;
         this.personSurname = personSurname;
         this.personAge = personAge;
         this.phoneNumbersList = phoneNumbersList;
-        this.personSectionsList = personSectionsList;
+        this.personSectionList = personSectionList;
     }
 
     public Long getPersonId() {
@@ -86,17 +79,15 @@ public class Person extends AbstractEntity {
         this.phoneNumbersList = phoneNumbersList;
     }
 
-    public List<PersonSection> getPersonSectionsList() {
-        if (personSectionsList == null) {
-            this.personSectionsList = personSectionsRepository.findAllBYPersonId(this.personId);
+    public List<PersonSection> getPersonSectionList() {
+        if (personSectionList == null) {
+            this.personSectionList = personSectionsRepository.findAllBYPersonId(this.personId);
 
         }
-        return personSectionsList;
+        return personSectionList;
     }
 
-    public void setPersonsSections(List<PersonSection> personsSectionsList) {
-        this.personSectionsList = personsSectionsList;
+    public void setPersonSection(List<PersonSection> personSectionList) {
+        this.personSectionList = personSectionList;
     }
-
-
 }

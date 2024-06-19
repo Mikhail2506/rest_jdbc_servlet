@@ -15,11 +15,11 @@ public class PersonSectionsDBQueries {
             WHERE id = ?;
             """;
     public static final String FIND_BY_ID_SQL = """
-            SELECT department_id, department_name FROM departments
-            WHERE department_id = ?
+            SELECT id, name FROM sections
+            WHERE id = ?
             LIMIT 1;
             """;
-    private static final String FIND_ALL_SQL = """
+    public static final String FIND_ALL_SQL = """
             SELECT id, name FROM sections;
             """;
     public static final String EXIST_BY_ID_SQL = """

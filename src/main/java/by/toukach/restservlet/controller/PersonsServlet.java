@@ -1,8 +1,8 @@
 package by.toukach.restservlet.controller;
 
 import by.toukach.restservlet.dto.PersonDTO;
-import by.toukach.restservlet.dto.PersonToUpdateDTO;
 import by.toukach.restservlet.entity.Person;
+import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
 import by.toukach.restservlet.repository.PersonRepository;
 import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @WebServlet("/persons")
 public class PersonsServlet extends HttpServlet {
 
-    private final PersonMapperImpl personMapperImpl = new PersonMapperImpl();
+    private final PersonMapper personMapper = PersonMapperImpl.getInstance();
     private final transient PersonService personService = PersonServiceImpl.getInstance();
     private final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
     private final ObjectMapper objectMapper;
@@ -64,22 +64,14 @@ public class PersonsServlet extends HttpServlet {
             if ("all".equals(pathPart[1])) {
                 List<Person> personList = personRepository.findAll();
 
-//                req.setAttribute("persons", personList);
-//                req.getRequestDispatcher("/WEB-INF/persons.jsp").forward(req, resp);
-//                personService.readPersons();
-
                 resp.setStatus(HttpServletResponse.SC_OK);
                 responseAnswer = objectMapper.writeValueAsString(personList);
             } else {
                 Long id = Long.parseLong(req.getParameter("id"));
-//                PersonDTO dto = personMapper.entityToDto(personService.readPerson(id));
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//               String responseAnswer = personMapper.toString(dto);
-//                printWriter.write(personMapper.(dto));
 
-                PersonDTO dto = personMapperImpl.entityToDto(personService.readPerson(id));
+                Person person = personMapper.map(personService.readPerson(id));
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = personMapperImpl.mapperDTOToJson(dto);
+                responseAnswer = String.valueOf(personMapper.map(person));
                 // printWriter.write(responseAnswer);
             }
         } catch (Exception e) {
@@ -116,11 +108,11 @@ public class PersonsServlet extends HttpServlet {
         String json = getJson(req);
 
         String responseAnswer = "";
-        Optional<PersonToUpdateDTO> personUpdating;
+        Optional<PersonDTO> personUpdating;
         try {
-            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonToUpdateDTO.class));
-            PersonToUpdateDTO personToUpdateDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
-            personService.updatePerson(personToUpdateDTO);
+            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
+            PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
+            personService.updatePerson(personDTO);
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseAnswer = "Incorrect user Object.";
@@ -211,7 +203,7 @@ public class PersonsServlet extends HttpServlet {
 //        }
 //    }
 
-//    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
+    //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
 //        String uri = req.getRequestURI();
 //        switch (uri) {
 //            case "": {

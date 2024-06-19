@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS persons CASCADE;
+DROP TABLE IF EXISTS personDTOS CASCADE;
 DROP TABLE IF EXISTS persons_sections CASCADE;
 DROP TABLE IF EXISTS sections CASCADE;
 DROP TABLE IF EXISTS phone_numbers CASCADE;
 
--- Создание таблицы person
-CREATE TABLE IF NOT EXISTS persons
+-- Создание таблицы personDTO
+CREATE TABLE IF NOT EXISTS personDTOS
 (
     id      SERIAL PRIMARY KEY,
     name    VARCHAR(50) NOT NULL,
@@ -25,16 +25,16 @@ CREATE TABLE IF NOT EXISTS phone_numbers
     id        SERIAL PRIMARY KEY,
     phone     VARCHAR(20) NOT NULL,
     person_id INT         NOT NULL,
-    FOREIGN KEY (person_id) REFERENCES persons (id)
+    FOREIGN KEY (person_id) REFERENCES personDTOS (id)
 );
 
--- Создание таблицы связи person-section (Many-to-Many)
+-- Создание таблицы связи personDTO-section (Many-to-Many)
 CREATE TABLE IF NOT EXISTS person_section
 (
     persons_sections_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     person_id           INT NOT NULL,
     section_id          INT NOT NULL,
-    FOREIGN KEY (person_id) REFERENCES persons (id),
+    FOREIGN KEY (person_id) REFERENCES personDTOS (id),
     FOREIGN KEY (section_id) REFERENCES sections (id)
 );
 
@@ -44,7 +44,7 @@ VALUES ('Борьба'), -- 1
        ('Теннис'), -- 3
        ('Хоккей'); -- 4
 
-INSERT INTO persons (name, surname, age)
+INSERT INTO personDTOS (name, surname, age)
 VALUES ('Сергей', 'Субботин', 34), -- 1
        ('Иван', 'Петров', 45),     -- 2
        ('Дмитрий', 'Белый', 31),   -- 3

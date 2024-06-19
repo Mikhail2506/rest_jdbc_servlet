@@ -1,7 +1,6 @@
 package by.toukach.restservlet.service.serviceImpl;
 
 import by.toukach.restservlet.dto.PersonSectionDTO;
-import by.toukach.restservlet.dto.PersonSectionToUpdateDTO;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
 import by.toukach.restservlet.exception.NotFoundException;
@@ -19,10 +18,10 @@ import java.util.List;
 
 public class PersonSectionServiceImpl implements PersonSectionService {
 
-    PersonSectionMapper personSectionMapper = new PersonSectionMapperImpl();
-    PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
-    PersonRepository personRepository = PersonRepositoryImpl.getInstance();
-    PersonToSectionRepository personToSectionRepository = PersonToSectionRepositoryImpl.getInstance();
+    private final PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
+    private final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
+    private final PersonToSectionRepository personToSectionRepository = PersonToSectionRepositoryImpl.getInstance();
+    private static final PersonSectionMapper personSectionMapper = PersonSectionMapperImpl.getInstance();
 
     private static PersonSectionService instance;
 
@@ -38,8 +37,8 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     }
 
     @Override
-    public PersonSection save(PersonSectionToUpdateDTO personSectionToUpdateDTO) throws NotFoundException {
-        PersonSection personSection = personSectionMapper.dtoToEntity(personSectionToUpdateDTO);
+    public PersonSection save(PersonSectionDTO personSectionDTO) throws NotFoundException {
+        PersonSection personSection = personSectionMapper.map(personSectionDTO);
         checkExistPersonSection(personSection.getSectionId());
         personSectionsRepository.save(personSection);
         return personSection;
@@ -52,8 +51,8 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     }
 
     @Override
-    public void update(PersonSectionToUpdateDTO personSectionToUpdateDTO) throws NotFoundException {
-        PersonSection personSection = personSectionMapper.dtoToEntity(personSectionToUpdateDTO);
+    public void update(PersonSectionDTO personSectionDTO) throws NotFoundException {
+        PersonSection personSection = personSectionMapper.map(personSectionDTO);
         checkExistPersonSection(personSection.getSectionId());
         personSectionsRepository.update(personSection);
     }
@@ -62,13 +61,13 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     public PersonSectionDTO findById(Long personSectionId) throws NotFoundException {
         PersonSection personSection = personSectionsRepository.findById(personSectionId).orElseThrow(() ->
                 new NotFoundException("Department not found."));
-        return personSectionMapper.entityToDto(personSection);
+        return personSectionMapper.map(personSection);
     }
 
     @Override
     public List<PersonSectionDTO> findAll() {
-        List<PersonSection> personSectionList = personSectionsRepository.findAllBYPersonId();
-        return personSectionMapper.entityToDtoList(personSectionList);
+        List<PersonSection> personSectionList = personSectionsRepository.findAll();
+        return personSectionMapper.mapUpdateList(personSectionList);
     }
 
     @Override

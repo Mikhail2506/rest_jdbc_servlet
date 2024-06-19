@@ -1,7 +1,6 @@
 package by.toukach.restservlet.mapper;
 
 import by.toukach.restservlet.dto.PhoneNumberDTO;
-import by.toukach.restservlet.dto.PhoneNumberToUpdateDTO;
 import by.toukach.restservlet.entity.PhoneNumber;
 import org.mapstruct.Mapper;
 
@@ -16,8 +15,7 @@ public interface PhoneNumberMapper {
 
     List<PhoneNumberDTO> map(List<PhoneNumber> phoneNumberList);
 
-    List<PhoneNumber> mapUpdateList(List<PhoneNumberToUpdateDTO> phoneNumberToUpdateDTOList);
+    List<PhoneNumber> mapUpdateList(List<PhoneNumberDTO> phoneNumberDTOList);
 
-    PhoneNumber map(PhoneNumberToUpdateDTO phoneNumberToUpdateDTO);
 
 }

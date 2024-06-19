@@ -1,12 +1,10 @@
 package by.toukach.restservlet.dto;
 
-import by.toukach.restservlet.entity.Person;
-
 import java.util.List;
 
-public class PersonSectionDTO extends AbstractDTO {
+public class PersonSectionDTO {
 
-    private String section;
+    private String sectionName;
 
     private List<PersonDTO> personDTOList;
 
@@ -14,25 +12,25 @@ public class PersonSectionDTO extends AbstractDTO {
 
     }
 
-    public PersonSectionDTO(String section, List<PersonDTO> personDTOList) {
+    public PersonSectionDTO(String sectionName, List<PersonDTO> personDTOList) {
 
-        this.section = section;
+        this.sectionName = sectionName;
         this.personDTOList = personDTOList;
     }
 
-    public String getSection() {
-        return section;
+    public String getSectionName() {
+        return sectionName;
     }
 
-    public void setSection(String section) {
-        this.section = section;
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
     }
 
-    public List<PersonDTO> getPersonDTOList() {
+    public List<PersonDTO> getPersonList() {
         return personDTOList;
     }
 
-    public void setPersonDTOList(List<PersonDTO> personDTOList) {
+    public void setPersonList(List<PersonDTO> personDTOList) {
         this.personDTOList = personDTOList;
     }
 }

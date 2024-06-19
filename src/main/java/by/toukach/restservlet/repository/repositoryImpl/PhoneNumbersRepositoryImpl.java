@@ -16,6 +16,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
 
 
     private static PhoneNumbersRepository instance;
+
     private PhoneNumbersRepositoryImpl() {
     }
 
@@ -25,6 +26,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
         }
         return instance;
     }
+
     private static PhoneNumber createPhoneNumber(ResultSet resultSet) throws SQLException {
         PhoneNumber phoneNumber;
 
@@ -32,7 +34,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
                 resultSet.getString("surname"),
-                resultSet.getInt("age"),
+                resultSet.getLong("age"),
                 List.of(),
                 List.of()
         );

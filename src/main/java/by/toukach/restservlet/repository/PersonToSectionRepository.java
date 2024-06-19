@@ -24,4 +24,6 @@ public interface PersonToSectionRepository {
     Optional<PersonToSection> findByPersonIdAndSectiontId(Long personId, Long sectionId);
 
     PersonToSection save(PersonToSection personToSection);
+
+    boolean exitsById(Long personId);
 }
