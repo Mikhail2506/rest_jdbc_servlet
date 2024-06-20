@@ -44,9 +44,11 @@ public class PersonRepositoryImpl implements PersonRepository {
             preparedStatement.setString(1, person.getPersonName());
             preparedStatement.setString(2, person.getPersonSurname());
             preparedStatement.setLong(3, person.getPersonAge());
+
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
             if (resultSet.next()) {
                 person = new Person(
                         resultSet.getLong("id"),
@@ -57,6 +59,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                         null
                 );
             }
+
             savePersonPhoneNumbers(person);
             savePersonsSections(person);
             person.getPhoneNumbersList();
@@ -257,7 +260,10 @@ public class PersonRepositoryImpl implements PersonRepository {
         List<Person> personList = new ArrayList<>();
 
         try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL)) {
+//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement
+                     ("""
+                             SELECT id, name, surname, age FROM public.persons;""")){
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

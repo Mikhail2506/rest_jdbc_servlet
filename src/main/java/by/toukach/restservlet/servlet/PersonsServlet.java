@@ -4,11 +4,10 @@ import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
-import by.toukach.restservlet.repository.PersonRepository;
-import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
 import by.toukach.restservlet.service.PersonService;
 import by.toukach.restservlet.service.serviceImpl.PersonServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ public class PersonsServlet extends HttpServlet {
 
     private final PersonMapper personMapper = PersonMapperImpl.getInstance();
     private final transient PersonService personService = PersonServiceImpl.getInstance();
-    private final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
     private final ObjectMapper objectMapper;
 
     public PersonsServlet() {
@@ -54,28 +52,55 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         setJsonHeader(resp);
         String responseAnswer = "";
-
         PrintWriter printWriter = resp.getWriter();
+
+        //String action = req.getRequestURI();
+       // String action = req.getServletPath();
+
+//        switch (action) {
+//            case "/id": {
+//                Long id = Long.parseLong(req.getParameter("id"));
+//                Person dto = null;
+//                try {
+//                    dto = personMapper.map(personService.readPerson(id));
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                printWriter.write(String.valueOf(dto));
+//                break;
+//            }
+//            case "/all": {
+//                List<PersonDTO> personList = null;
+//                try {
+//                    personList = personService.readPersons();
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                resp.setStatus(HttpServletResponse.SC_OK);
+//                responseAnswer = objectMapper.writeValueAsString(personList);
+//                printWriter.write(responseAnswer);
+//                break;
+//            }
+//        }
+
+        //___
 
         try {
             String[] pathPart = req.getPathInfo().split("/");
             if ("all".equals(pathPart[1])) {
-                //printWriter.write("работает");
-                List<Person> personList = personRepository.findAll();
-
+                List<PersonDTO> personList = personService.readPersons();
                 resp.setStatus(HttpServletResponse.SC_OK);
                 responseAnswer = objectMapper.writeValueAsString(personList);
             } else {
                 Long id = Long.parseLong(req.getParameter("id"));
-
                 Person person = personMapper.map(personService.readPerson(id));
                 resp.setStatus(HttpServletResponse.SC_OK);
                 responseAnswer = String.valueOf(personMapper.map(person));
-                // printWriter.write(responseAnswer);
+                 printWriter.write(responseAnswer);
             }
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

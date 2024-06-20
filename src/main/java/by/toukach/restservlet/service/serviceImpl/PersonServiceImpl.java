@@ -1,6 +1,7 @@
 package by.toukach.restservlet.service.serviceImpl;
 
 import by.toukach.restservlet.dto.PersonDTO;
+import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.exception.NotFoundException;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
@@ -35,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDTO> readPersons() throws SQLException {
-        List<by.toukach.restservlet.entity.Person> all = personRepository.findAll();
+        List<Person> all = personRepository.findAll();
         return personMapper.map(all);
     }
 

@@ -75,4 +75,15 @@ public class PersonDTO {
     public void setPersonSectionDTOList(List<PersonSectionDTO> personSectionDTOList) {
         this.personSectionDTOList = personSectionDTOList;
     }
+
+    @Override
+    public String toString() {
+        return "PersonDTO{" +
+                "personName='" + personName + '\'' +
+                ", personSurname='" + personSurname + '\'' +
+                ", personAge=" + personAge +
+                ", phoneNumberDTOList=" + phoneNumberDTOList +
+                ", personSectionDTOList=" + personSectionDTOList +
+                '}';
+    }
 }

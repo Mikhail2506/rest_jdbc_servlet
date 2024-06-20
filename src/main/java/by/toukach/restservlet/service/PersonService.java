@@ -1,6 +1,7 @@
 package by.toukach.restservlet.service;
 
 import by.toukach.restservlet.dto.PersonDTO;
+import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.exception.NotFoundException;
 
 import java.sql.SQLException;
