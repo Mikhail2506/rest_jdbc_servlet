@@ -3,9 +3,8 @@ package by.toukach.restservlet.repository.repositoryImpl;
 import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
-import by.toukach.restservlet.repository.PersonRepository;
 import by.toukach.restservlet.repository.PersonSectionsRepository;
-import by.toukach.restservlet.repository.PersonToSectionRepository;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
     @Override
     public void update(PersonSection personSection) {
         try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
 
             preparedStatement.setString(1, personSection.getSectionName());
             preparedStatement.setLong(2, personSection.getSectionId());
@@ -80,7 +79,7 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
     public boolean deleteById(Long personSectionId) {
         boolean deleteResult = true;
         try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
 
             preparedStatement.setLong(1, personSectionId);
 
@@ -91,22 +90,22 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
         return deleteResult;
     }
 
-    public List<PersonSection> findAllBYPersonId(Long personId) {
-        PersonSection personSection = null;
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
-
-            preparedStatement.setLong(1, personId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                personSection = PersonSectionsRepositoryImpl.createPersonSection(resultSet);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return (List<PersonSection>) personSection;
-    }
+//    public List<PersonSection> findAllBYPersonId(Long personId) {
+//        PersonSection personSection = null;
+//        try (Connection connection = ConnectionManager.open();
+//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+//
+//            preparedStatement.setLong(1, personId);
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                personSection = PersonSectionsRepositoryImpl.createPersonSection(resultSet);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return (List<PersonSection>) personSection;
+//    }
 
     @Override
     public List<PersonSection> findAll() {

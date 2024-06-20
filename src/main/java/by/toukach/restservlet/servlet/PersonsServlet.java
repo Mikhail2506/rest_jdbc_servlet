@@ -1,4 +1,4 @@
-package by.toukach.restservlet.controller;
+package by.toukach.restservlet.servlet;
 
 import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
@@ -20,7 +20,8 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/persons")
+//@WebServlet("/persons")
+@WebServlet(urlPatterns = {"/persons/*"})
 public class PersonsServlet extends HttpServlet {
 
     private final PersonMapper personMapper = PersonMapperImpl.getInstance();
@@ -54,6 +55,7 @@ public class PersonsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         setJsonHeader(resp);
         String responseAnswer = "";
 
@@ -62,6 +64,7 @@ public class PersonsServlet extends HttpServlet {
         try {
             String[] pathPart = req.getPathInfo().split("/");
             if ("all".equals(pathPart[1])) {
+                //printWriter.write("работает");
                 List<Person> personList = personRepository.findAll();
 
                 resp.setStatus(HttpServletResponse.SC_OK);

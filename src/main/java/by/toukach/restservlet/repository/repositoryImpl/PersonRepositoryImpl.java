@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import static by.toukach.restservlet.db.PersonsDataBaseQueries.*;
 
@@ -50,7 +49,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 person = new Person(
-                        (long) resultSet.getLong("id"),
+                        resultSet.getLong("id"),
                         person.getPersonName(),
                         person.getPersonSurname(),
                         person.getPersonAge(),
@@ -71,7 +70,7 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     public void update(Person person) {
         try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
 
             preparedStatement.setString(1, person.getPersonName());
             preparedStatement.setString(2, person.getPersonSurname());
@@ -181,7 +180,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                     });
             existsPhoneNumberIdList
                     .stream()
-                    .forEach((Consumer<? super Long>) phoneNumbersRepository.findAllByPersonId(person.getPersonId()));
+                    .forEach(phoneNumbersRepository::deleteById);
         } else {
             phoneNumbersRepository.deleteById(person.getPersonId());
         }

@@ -1,8 +1,10 @@
 package by.toukach.restservlet.entity;
 
 import by.toukach.restservlet.repository.PersonSectionsRepository;
+import by.toukach.restservlet.repository.PersonToSectionRepository;
 import by.toukach.restservlet.repository.PhoneNumbersRepository;
 import by.toukach.restservlet.repository.repositoryImpl.PersonSectionsRepositoryImpl;
+import by.toukach.restservlet.repository.repositoryImpl.PersonToSectionRepositoryImpl;
 import by.toukach.restservlet.repository.repositoryImpl.PhoneNumbersRepositoryImpl;
 
 import java.util.List;
@@ -13,6 +15,8 @@ public class Person {
             PhoneNumbersRepositoryImpl.getInstance();
     private final PersonSectionsRepository personSectionsRepository =
             PersonSectionsRepositoryImpl.getInstance();
+    private final PersonToSectionRepository personToSectionRepository =
+            PersonToSectionRepositoryImpl.getInstance();
 
     private Long personId;
 
@@ -81,8 +85,7 @@ public class Person {
 
     public List<PersonSection> getPersonSectionList() {
         if (personSectionList == null) {
-            this.personSectionList = personSectionsRepository.findAllBYPersonId(this.personId);
-
+            this.personSectionList = personToSectionRepository.findSectionByPersonId(this.personId);
         }
         return personSectionList;
     }

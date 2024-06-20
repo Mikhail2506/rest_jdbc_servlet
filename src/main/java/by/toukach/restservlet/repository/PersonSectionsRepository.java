@@ -16,13 +16,11 @@ public interface PersonSectionsRepository{
 
     boolean exitsById(Long personSectionId);
 
-    //List<PersonDTO> findPersonsBySectionId(Long personSectionId);
-
     Optional<PersonSection> findById(Long personSectionId);
 
     PersonToSection save(PersonToSection personToSection);
 
-    List<PersonSection> findAllBYPersonId(Long personId);
+   // List<PersonSection> findAllBYPersonId(Long personId);
 
     List<PersonSection> findAll();
 }

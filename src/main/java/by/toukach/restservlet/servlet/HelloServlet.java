@@ -1,4 +1,4 @@
-package by.toukach.restservlet.controller;
+package by.toukach.restservlet.servlet;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
