@@ -12,15 +12,17 @@ public interface PersonSectionsRepository{
 
     void update(PersonSection personSection);
 
-    boolean deleteById(Long personSectionId);
+    boolean deleteById(int personSectionId);
 
-    boolean exitsById(Long personSectionId);
+    boolean exitsById(int personSectionId);
 
-    Optional<PersonSection> findById(Long personSectionId);
+    Optional<PersonSection> findById(int personSectionId);
 
-    PersonToSection save(PersonToSection personToSection);
+    //PersonSection save(PersonToSection personToSection);
 
    // List<PersonSection> findAllBYPersonId(Long personId);
+
+    List<PersonSection> findAllBYPersonId(int personId);
 
     List<PersonSection> findAll();
 }

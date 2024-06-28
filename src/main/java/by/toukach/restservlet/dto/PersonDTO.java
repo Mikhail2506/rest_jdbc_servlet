@@ -4,13 +4,13 @@ import java.util.List;
 
 public class PersonDTO {
 
-    private Long personId;
+    private int personId;
 
     private String personName;
 
     private String personSurname;
 
-    private Long personAge;
+    private int personAge;
 
     private List<PhoneNumberDTO> phoneNumberDTOList;
 
@@ -19,7 +19,7 @@ public class PersonDTO {
     public PersonDTO() {
     }
 
-    public PersonDTO(Long personId, String personName, String personSurname, Long personAge,
+    public PersonDTO(Integer personId, String personName, String personSurname, int personAge,
                      List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
         this.personId = personId;
         this.personName = personName;
@@ -30,7 +30,7 @@ public class PersonDTO {
 
     }
 
-    public Long getPersonId() {
+    public Integer getPersonId() {
         return personId;
     }
 
@@ -50,11 +50,11 @@ public class PersonDTO {
         this.personSurname = personSurname;
     }
 
-    public Long getPersonAge() {
+    public int getPersonAge() {
         return personAge;
     }
 
-    public void setPersonAge(Long personAge) {
+    public void setPersonAge(int personAge) {
         this.personAge = personAge;
     }
 

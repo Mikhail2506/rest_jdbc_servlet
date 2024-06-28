@@ -9,21 +9,21 @@ import java.util.Optional;
 
 public interface PersonToSectionRepository {
 
-    boolean deleteByPersonId(Long id);
+    boolean deleteByPersonId(int id);
 
-    boolean deleteBySectionId(Long id);
+    boolean deleteBySectionId(int id);
 
-    List<PersonToSection> findAllByPersonId(Long personId);
+    List<PersonToSection> findAllByPersonId(int personId);
 
-    List<PersonSection> findSectionByPersonId(Long personId);
+    List<PersonSection> findSectionByPersonId(int personId);
 
-    List<PersonToSection> findAllBySectionId(Long sectionId);
+    List<PersonToSection> findAllBySectionId(int sectionId);
 
-    List<Person> findPersonsBySectionId(Long sectionId);
+    List<Person> findPersonsBySectionId(int sectionId);
 
-    Optional<PersonToSection> findByPersonIdAndSectiontId(Long personId, Long sectionId);
+    Optional<PersonToSection> findByPersonIdAndSectiontId(int personId, int sectionId);
 
     PersonToSection save(PersonToSection personToSection);
 
-    boolean exitsById(Long personId);
+    boolean exitsById(int personId);
 }

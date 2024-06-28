@@ -19,21 +19,14 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-//@WebServlet("/persons")
-@WebServlet(urlPatterns = {"/persons/*"})
+@WebServlet("/persons/*")
 public class PersonsServlet extends HttpServlet {
 
     private final PersonMapper personMapper = PersonMapperImpl.getInstance();
-    private final transient PersonService personService = PersonServiceImpl.getInstance();
-    private final ObjectMapper objectMapper;
+    private final PersonService personService = PersonServiceImpl.getInstance();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public PersonsServlet() {
-        this.objectMapper = new ObjectMapper();
-    }
-
-    @Override
-    public void init() {
-
     }
 
     private static void setJsonHeader(HttpServletResponse resp) {
@@ -51,63 +44,43 @@ public class PersonsServlet extends HttpServlet {
         return sb.toString();
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setJsonHeader(resp);
-        String responseAnswer = "";
         PrintWriter printWriter = resp.getWriter();
-
-        //String action = req.getRequestURI();
-       // String action = req.getServletPath();
-
-//        switch (action) {
-//            case "/id": {
-//                Long id = Long.parseLong(req.getParameter("id"));
-//                Person dto = null;
-//                try {
-//                    dto = personMapper.map(personService.readPerson(id));
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                printWriter.write(String.valueOf(dto));
-//                break;
-//            }
-//            case "/all": {
-//                List<PersonDTO> personList = null;
-//                try {
-//                    personList = personService.readPersons();
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                responseAnswer = objectMapper.writeValueAsString(personList);
-//                printWriter.write(responseAnswer);
-//                break;
-//            }
-//        }
-
-        //___
+        String responseAnswer = "";
 
         try {
-            String[] pathPart = req.getPathInfo().split("/");
-            if ("all".equals(pathPart[1])) {
+            String requestURI = req.getRequestURI();
+            String[] parts = requestURI.split("/");
+            String parameter = parts[parts.length - 1];
+
+            if ("all".equals(parameter)) {
                 List<PersonDTO> personList = personService.readPersons();
                 resp.setStatus(HttpServletResponse.SC_OK);
                 responseAnswer = objectMapper.writeValueAsString(personList);
             } else {
-                Long id = Long.parseLong(req.getParameter("id"));
-                Person person = personMapper.map(personService.readPerson(id));
-                resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = String.valueOf(personMapper.map(person));
-                 printWriter.write(responseAnswer);
+                int id = Integer.parseInt(parameter);
+                PersonDTO person = personService.readPerson(id);
+                if (person != null) {
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    responseAnswer = objectMapper.writeValueAsString(personMapper.map(person));
+                } else {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    responseAnswer = "Person not found with id: " + id;
+                }
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            responseAnswer = "Bad request.";
+            responseAnswer = "Invalid ID format.";
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            responseAnswer = "Internal server error.";
+        } finally {
+            printWriter.write(responseAnswer);
+            printWriter.flush();
         }
-        printWriter.write(responseAnswer);
-        printWriter.flush();
     }
 
     @Override
@@ -158,7 +131,7 @@ public class PersonsServlet extends HttpServlet {
 //        String[] pathPart = req.getPathInfo().split("/");
 //        Long userId = Long.parseLong(pathPart[1]);
 
-            Long personId = Long.parseLong(req.getParameter("id"));
+            int personId = Integer.parseInt(req.getParameter("id"));
 
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             personService.deletePerson(personId);

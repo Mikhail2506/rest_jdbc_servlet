@@ -1,6 +1,7 @@
 package by.toukach.restservlet.repository;
 
 import by.toukach.restservlet.entity.Person;
+import by.toukach.restservlet.entity.PersonSection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,13 +14,13 @@ public interface PersonRepository {
 
     void update(Person person);
 
-    boolean deleteById(Long id);
+    boolean deleteById(int id);
 
-    Optional<Person> findById(Long id);
+    Optional<Person> findById(int id);
 
     List<Person> findAll();
 
-    boolean existById(Long id);
+    boolean existById(int id);
 
     Person createPerson(ResultSet resultSet) throws SQLException;
 }

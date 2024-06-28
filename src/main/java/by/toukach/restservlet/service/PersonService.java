@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface PersonService {
 
-    by.toukach.restservlet.entity.Person addPerson(PersonDTO personDTO);
+    Person addPerson(PersonDTO personDTO);
 
     List<PersonDTO> readPersons()throws SQLException;
 
-   PersonDTO readPerson(Long personId) throws SQLException;
+   PersonDTO readPerson(int personId) throws SQLException;
 
-    void deletePerson(Long PersonId);
+    void deletePerson(int PersonId);
 
     void updatePerson(PersonDTO personDTO) throws NotFoundException;
 }

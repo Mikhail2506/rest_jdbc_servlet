@@ -1,6 +1,7 @@
 package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
+import by.toukach.restservlet.db.ConnectionManagerImpl;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.repository.PhoneNumbersRepository;
@@ -14,7 +15,7 @@ import static by.toukach.restservlet.db.PhoneNumbersDBQueries.*;
 
 public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
 
-
+    private final ConnectionManager connectionManager = ConnectionManagerImpl.getInstance();
     private static PhoneNumbersRepository instance;
 
     private PhoneNumbersRepositoryImpl() {
@@ -31,15 +32,15 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
         PhoneNumber phoneNumber;
 
         Person person = new Person(
-                resultSet.getLong("id"),
+                resultSet.getInt("id"),
                 resultSet.getString("name"),
                 resultSet.getString("surname"),
-                resultSet.getLong("age"),
+                resultSet.getInt("age"),
                 List.of(),
                 List.of()
         );
         phoneNumber = new PhoneNumber(
-                resultSet.getLong("id"),
+                resultSet.getInt("id"),
                 resultSet.getString("phone"),
                 person);
         return phoneNumber;
@@ -47,7 +48,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
 
     @Override
     public PhoneNumber save(PhoneNumber phoneNumber) {
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, phoneNumber.getNumber());
@@ -62,7 +63,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
             if (resultSet.next()) {
 
                 phoneNumber = new PhoneNumber(
-                        resultSet.getLong("id"),
+                        resultSet.getInt("id"),
                         phoneNumber.getNumber(),
                         phoneNumber.getPerson()
                 );
@@ -75,7 +76,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
 
     @Override
     public void update(PhoneNumber phoneNumber) {
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
 
             preparedStatement.setString(1, phoneNumber.getNumber());
@@ -92,12 +93,12 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(int id) {
         boolean deleteResult = true;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
 
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
 
             deleteResult = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -109,7 +110,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     @Override
     public boolean exists(String number) {
         boolean isExists = false;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_NUMBER_SQL)) {
 
             preparedStatement.setString(1, number);
@@ -127,7 +128,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     @Override
     public Optional<PhoneNumber> findByNumber(String number) {
         PhoneNumber phoneNumber = null;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NUMBER_SQL)) {
 
             preparedStatement.setString(1, number);
@@ -143,9 +144,9 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     }
 
     @Override
-    public List<PhoneNumber> findAllByPersonId(Long id) {
+    public List<PhoneNumber> findAllByPersonId(int id) {
         List<PhoneNumber> phoneNumberList = new CopyOnWriteArrayList<>();
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SQL)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -161,7 +162,7 @@ public class PhoneNumbersRepositoryImpl implements PhoneNumbersRepository {
     @Override
     public boolean exitsById(int id) {
         boolean isExists = false;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
 
             preparedStatement.setLong(1, id);

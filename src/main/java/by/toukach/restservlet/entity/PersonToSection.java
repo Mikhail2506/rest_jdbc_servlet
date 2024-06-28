@@ -2,36 +2,36 @@ package by.toukach.restservlet.entity;
 
 public class PersonToSection {
 
-    private Long id;
-    private Long personId;
-    private Long sectionId;
+    private Integer id;
+    private Integer personId;
+    private Integer sectionId;
 
     public PersonToSection() {
     }
 
-    public PersonToSection(Long id, Long personId, Long sectionId) {
+    public PersonToSection(Integer id, Integer personId, Integer sectionId) {
         this.id = id;
         this.personId = personId;
         this.sectionId = sectionId;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public Long getPersonId() {
+    public int getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Long personId) {
+    public void setPersonId(int personId) {
         this.personId = personId;
     }
 
-    public Long getSectionId() {
+    public int getSectionId() {
         return sectionId;
     }
 
-    public void setSectionId(Long sectionId) {
+    public void setSectionId(int sectionId) {
         this.sectionId = sectionId;
     }
 }

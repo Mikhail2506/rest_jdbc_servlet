@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PhoneNumbersRepository {
 
-    boolean deleteById(Long id);
+    boolean deleteById(int id);
 
     boolean exists(String number);
 
@@ -17,7 +17,7 @@ public interface PhoneNumbersRepository {
 
     Optional<PhoneNumber> findByNumber(String number);
 
-    List<PhoneNumber> findAllByPersonId(Long id);
+    List<PhoneNumber> findAllByPersonId(int id);
 
     boolean exitsById(int id);
 }

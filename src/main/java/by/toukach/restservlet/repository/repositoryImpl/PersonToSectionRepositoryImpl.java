@@ -1,6 +1,7 @@
 package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
+import by.toukach.restservlet.db.ConnectionManagerImpl;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
@@ -17,6 +18,7 @@ import static by.toukach.restservlet.db.PersonToSectionDBQueries.*;
 
 public class PersonToSectionRepositoryImpl implements PersonToSectionRepository {
 
+    private final ConnectionManager connectionManager = ConnectionManagerImpl.getInstance();
     private static final PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
     private static final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
     private static PersonToSectionRepository instance;
@@ -32,7 +34,7 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
     }
 
     public PersonToSection save(PersonToSection personToSection) {
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setLong(1, personToSection.getPersonId());
@@ -43,7 +45,7 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 personToSection = new PersonToSection(
-                        resultSet.getLong("persons_sections_id"),
+                        resultSet.getInt("persons_sections_id"),
                         personToSection.getPersonId(),
                         personToSection.getSectionId()
                 );
@@ -55,7 +57,7 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
     }
 
     public void update(PersonToSection personToSection) {
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
 
             preparedStatement.setLong(1, personToSection.getPersonId());
@@ -70,7 +72,7 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
 
     public boolean deleteById(Long id) {
         boolean deleteResult = false;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
 
             preparedStatement.setLong(1, id);
@@ -83,12 +85,12 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
     }
 
     @Override
-    public boolean deleteByPersonId(Long id) {
+    public boolean deleteByPersonId(int id) {
         boolean deleteResult = false;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_USERID_SQL)) {
 
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
 
             deleteResult = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -98,12 +100,12 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
     }
 
     @Override
-    public boolean deleteBySectionId(Long id) {
+    public boolean deleteBySectionId(int id) {
         boolean deleteResult = false;
-        try (Connection connection = ConnectionManager.open();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_DEPARTMENT_ID_SQL)) {
 
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
 
             deleteResult = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -113,124 +115,125 @@ public class PersonToSectionRepositoryImpl implements PersonToSectionRepository 
     }
 
     @Override
-    public List<PersonToSection> findAllByPersonId(Long personId) {
-        List<PersonToSection> userToDepartmentList = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open();
+    public List<PersonToSection> findAllByPersonId(int personId) {
+        List<PersonToSection> personToSectionsList = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_USERID_SQL)) {
 
-            preparedStatement.setLong(1, personId);
+            preparedStatement.setInt(1, personId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                userToDepartmentList.add(createPersonToSection(resultSet));
+                personToSectionsList.add(createPersonToSection(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return userToDepartmentList;
+        return personToSectionsList;
     }
 
-    private PersonToSection createPersonToSection(ResultSet resultSet) throws SQLException {
-        PersonToSection personToSection;
-        personToSection = new PersonToSection(
-                resultSet.getLong("persons_sections_id"),
-                resultSet.getLong("person_id"),
-                resultSet.getLong("section_id")
-        );
-        return personToSection;
-    }
 
-    @Override
-    public List<PersonSection> findSectionByPersonId(Long personId) {
-        List<PersonSection> personSectionList = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_USERID_SQL)) {
+private PersonToSection createPersonToSection(ResultSet resultSet) throws SQLException {
+    PersonToSection personToSection;
+    personToSection = new PersonToSection(
+            resultSet.getInt("persons_sections_id"),
+            resultSet.getInt("person_id"),
+            resultSet.getInt("section_id")
+    );
+    return personToSection;
+}
 
-            preparedStatement.setLong(1, personId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long sectionId = resultSet.getLong("id");
-                Optional<PersonSection> optionalSection = personSectionsRepository.findById(sectionId);
-                if (optionalSection.isPresent()) {
-                    personSectionList.add(optionalSection.get());
-                }
+@Override
+public List<PersonSection> findSectionByPersonId(int personId) {
+    List<PersonSection> personSectionList = new ArrayList<>();
+    try (Connection connection = connectionManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_USERID_SQL)) {
+
+        preparedStatement.setLong(1, personId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int sectionId = resultSet.getInt("id");
+            Optional<PersonSection> optionalSection = personSectionsRepository.findById(sectionId);
+            if (optionalSection.isPresent()) {
+                personSectionList.add(optionalSection.get());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return personSectionList;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return personSectionList;
+}
 
-    @Override
-    public List<PersonToSection> findAllBySectionId(Long sectionId) {
-        List<PersonToSection> personToSectionList = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_DEPARTMENT_ID_SQL)) {
+@Override
+public List<PersonToSection> findAllBySectionId(int sectionId) {
+    List<PersonToSection> personToSectionList = new ArrayList<>();
+    try (Connection connection = connectionManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_DEPARTMENT_ID_SQL)) {
 
-            preparedStatement.setLong(1, sectionId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                personToSectionList.add(createPersonToSection(resultSet));
+        preparedStatement.setInt(1, sectionId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            personToSectionList.add(createPersonToSection(resultSet));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return personToSectionList;
+}
+
+@Override
+public List<Person> findPersonsBySectionId(int sectionId) {
+    List<Person> personList = new ArrayList<>();
+    try (Connection connection = connectionManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_DEPARTMENT_ID_SQL)) {
+
+        preparedStatement.setInt(1, sectionId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int personId = resultSet.getInt("id");
+            Optional<Person> optionalUser = personRepository.findById(personId);
+            if (optionalUser.isPresent()) {
+                personList.add(optionalUser.get());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return personToSectionList;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return personList;
+}
 
-    @Override
-    public List<Person> findPersonsBySectionId(Long sectionId) {
-        List<Person> personList = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_BY_DEPARTMENT_ID_SQL)) {
+@Override
+public Optional<PersonToSection> findByPersonIdAndSectiontId(int personId, int sectionId) {
+    Optional<PersonToSection> personToSection = Optional.empty();
+    try (Connection connection = connectionManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_USERID_AND_DEPARTMENT_ID_SQL)) {
 
-            preparedStatement.setLong(1, sectionId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                long personId = resultSet.getLong("id");
-                Optional<Person> optionalUser = personRepository.findById(personId);
-                if (optionalUser.isPresent()) {
-                    personList.add(optionalUser.get());
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        preparedStatement.setInt(1, personId);
+        preparedStatement.setInt(2, sectionId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            personToSection = Optional.of(createPersonToSection(resultSet));
         }
-        return personList;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return personToSection;
+}
 
-    @Override
-    public Optional<PersonToSection> findByPersonIdAndSectiontId(Long personId, Long sectionId) {
-        Optional<PersonToSection> personToSection = Optional.empty();
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_USERID_AND_DEPARTMENT_ID_SQL)) {
+@Override
+public boolean exitsById(int personId) {
+    boolean isExists = false;
+    try (Connection connection = connectionManager.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
 
-            preparedStatement.setLong(1, personId);
-            preparedStatement.setLong(2, sectionId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                personToSection = Optional.of(createPersonToSection(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        preparedStatement.setInt(1, personId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            isExists = resultSet.getBoolean(1);
         }
-        return personToSection;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-
-    @Override
-    public boolean exitsById(Long personId) {
-        boolean isExists = false;
-        try (Connection connection = ConnectionManager.open();
-             PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
-
-            preparedStatement.setLong(1, personId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                isExists = resultSet.getBoolean(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isExists;
-    }
+    return isExists;
+}
 }

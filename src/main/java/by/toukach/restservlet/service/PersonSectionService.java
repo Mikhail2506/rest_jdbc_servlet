@@ -12,14 +12,14 @@ public interface PersonSectionService {
 
     void update(PersonSectionDTO personSectionDTO) throws NotFoundException;
 
-    PersonSectionDTO findById(Long personSectionId) throws NotFoundException;
+    PersonSectionDTO findById(int personSectionId) throws NotFoundException;
 
     List<PersonSectionDTO> findAll();
 
-    void delete(Long personSectionId) throws NotFoundException;
+    void delete(int personSectionId) throws NotFoundException;
 
-    void deletePersonFromSection(Long personSectionId, Long personId) throws NotFoundException;
+    void deletePersonFromSection(int personSectionId, int personId) throws NotFoundException;
 
-    void addPersonToPersonSection(Long personSectionId, Long personId) throws NotFoundException;
+    void addPersonToPersonSection(int personSectionId, int personId) throws NotFoundException;
 
 }

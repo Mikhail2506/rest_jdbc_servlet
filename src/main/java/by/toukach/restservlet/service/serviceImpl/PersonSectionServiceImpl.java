@@ -44,7 +44,7 @@ public class PersonSectionServiceImpl implements PersonSectionService {
         return personSection;
     }
 
-    private void checkExistPersonSection(Long personSectionId) throws NotFoundException {
+    private void checkExistPersonSection(int personSectionId) throws NotFoundException {
         if (!personSectionsRepository.exitsById(personSectionId)) {
             throw new NotFoundException("Department not found.");
         }
@@ -58,7 +58,7 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     }
 
     @Override
-    public PersonSectionDTO findById(Long personSectionId) throws NotFoundException {
+    public PersonSectionDTO findById(int personSectionId) throws NotFoundException {
         PersonSection personSection = personSectionsRepository.findById(personSectionId).orElseThrow(() ->
                 new NotFoundException("Department not found."));
         return personSectionMapper.map(personSection);
@@ -71,13 +71,13 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     }
 
     @Override
-    public void delete(Long personSectionId) throws NotFoundException {
+    public void delete(int personSectionId) throws NotFoundException {
         checkExistPersonSection(personSectionId);
         personSectionsRepository.deleteById(personSectionId);
     }
 
     @Override
-    public void deletePersonFromSection(Long personSectionId, Long personId) throws NotFoundException {
+    public void deletePersonFromSection(int personSectionId, int personId) throws NotFoundException {
         checkExistPersonSection(personSectionId);
         if (personRepository.existById(personId)) {
             PersonToSection personToSection = personToSectionRepository.findByPersonIdAndSectiontId(personId, personSectionId)
@@ -89,7 +89,7 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     }
 
     @Override
-    public void addPersonToPersonSection(Long personSectionId, Long personId) throws NotFoundException {
+    public void addPersonToPersonSection(int personSectionId, int personId) throws NotFoundException {
         checkExistPersonSection(personSectionId);
         if (personRepository.existById(personId)) {
             PersonToSection personToSection = new PersonToSection(

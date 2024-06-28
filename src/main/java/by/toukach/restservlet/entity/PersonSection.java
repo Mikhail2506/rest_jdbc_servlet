@@ -11,20 +11,20 @@ public class PersonSection {
     private static final PersonToSectionRepository personToSectionRepository =
             PersonToSectionRepositoryImpl.getInstance();
 
-    Long sectionId;
+    Integer sectionId;
     String sectionName;
     List<Person> personList;
 
     public PersonSection() {
     }
 
-    public PersonSection(Long sectionId, String sectionName, List<Person> personList) {
+    public PersonSection(Integer sectionId, String sectionName, List<Person> personList) {
         this.sectionId = sectionId;
         this.sectionName = sectionName;
         this.personList = personList;
     }
 
-    public Long getSectionId() {
+    public Integer getSectionId() {
         return sectionId;
     }
 

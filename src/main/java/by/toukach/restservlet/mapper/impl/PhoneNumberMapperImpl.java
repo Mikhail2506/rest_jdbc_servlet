@@ -30,15 +30,16 @@ public class PhoneNumberMapperImpl implements PhoneNumberMapper {
         return new PhoneNumber(
                 null,
                 phoneNumberDTO.getNumber(),
-                personMapper.map(phoneNumberDTO.getPersonDTO())
+              personMapper.map(phoneNumberDTO.getPersonDTO())
         );
     }
 
     @Override
     public PhoneNumberDTO map(PhoneNumber phoneNumber) {
         return new PhoneNumberDTO(
+                phoneNumber.getPhoneNumberId(),
                 phoneNumber.getNumber(),
-                personMapper.map(phoneNumber.getPerson())
+               personMapper.map(phoneNumber.getPerson())
         );
     }
 

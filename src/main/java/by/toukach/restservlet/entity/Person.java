@@ -18,13 +18,13 @@ public class Person {
     private final PersonToSectionRepository personToSectionRepository =
             PersonToSectionRepositoryImpl.getInstance();
 
-    private Long personId;
+    private int personId;
 
     private String personName;
 
     private String personSurname;
 
-    private Long personAge;
+    private int personAge;
 
     List<PhoneNumber> phoneNumbersList;
 
@@ -33,7 +33,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long personId, String personName, String personSurname, Long personAge,
+    public Person(int personId, String personName, String personSurname, int personAge,
                   List<PhoneNumber> phoneNumbersList, List<PersonSection> personSectionList) {
         super();
         this.personId = personId;
@@ -44,8 +44,12 @@ public class Person {
         this.personSectionList = personSectionList;
     }
 
-    public Long getPersonId() {
+    public int getPersonId() {
         return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getPersonName() {
@@ -64,11 +68,11 @@ public class Person {
         this.personSurname = personSurname;
     }
 
-    public Long getPersonAge() {
+    public int getPersonAge() {
         return personAge;
     }
 
-    public void setPersonAge(Long personAge) {
+    public void setPersonAge(int personAge) {
         this.personAge = personAge;
     }
 

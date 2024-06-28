@@ -29,8 +29,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public by.toukach.restservlet.entity.Person addPerson(PersonDTO personDTO) {
-        by.toukach.restservlet.entity.Person person = personRepository.save(personMapper.map(personDTO));
+    public Person addPerson(PersonDTO personDTO) {
+        Person person = personRepository.save(personMapper.map(personDTO));
         return person;
     }
 
@@ -41,18 +41,18 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO readPerson(Long id) throws SQLException {
+    public PersonDTO readPerson(int id) throws SQLException {
         try {
             checkExistPerson(id);
         } catch (NotFoundException e) {
             System.out.println("Person with id " + id + " does not exist in DB!!!");
         }
-        by.toukach.restservlet.entity.Person person = personRepository.findById(id).orElseThrow();
+        Person person = personRepository.findById(id).orElseThrow();
         return personMapper.map(person);
     }
 
     @Override
-    public void deletePerson(Long id) {
+    public void deletePerson(int id) {
         try {
             checkExistPerson(id);
         } catch (NotFoundException e) {
@@ -74,7 +74,7 @@ public class PersonServiceImpl implements PersonService {
         personRepository.update(personMapper.map(personDTO));
     }
 
-    private void checkExistPerson(Long personId) throws NotFoundException {
+    private void checkExistPerson(int personId) throws NotFoundException {
         if (!personRepository.existById(personId)) {
             throw new NotFoundException("User not found.");
         }
