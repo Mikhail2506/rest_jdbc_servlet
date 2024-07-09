@@ -18,7 +18,7 @@ public class PersonsDataBaseQueries {
             """;
 
     public static final String FIND_SECTION_BY_NAME_SQL = """
-            SELECT DISTINCT id FROM public.sections
+            SELECT id FROM public.sections
             WHERE section_name = ?
             LIMIT 1;
             """;

@@ -110,7 +110,7 @@ public class PersonsServlet extends HttpServlet {
 
             try {
                 PersonDTO personDTOSave = objectMapper.readValue(json, PersonDTO.class);
-                Person savedPerson = personService.addPerson(personDTOSave);
+                PersonDTO savedPerson = personService.addPerson(personDTOSave);
                 String responseAnswer = objectMapper.writeValueAsString(savedPerson);
                 PrintWriter printWriter = resp.getWriter();
                 printWriter.write(responseAnswer);
@@ -155,8 +155,10 @@ public class PersonsServlet extends HttpServlet {
             String responseAnswer = "";
 
             try {
-                String[] pathPart = req.getPathInfo().split("/");
-                int personId = Integer.parseInt(pathPart[1]);
+                String requestURI = req.getRequestURI();
+                String[] parts = requestURI.split("/");
+                String parameter = parts[parts.length - 1];
+                int personId = Integer.parseInt(parameter);
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 personService.deletePerson(personId);
             } catch (Exception e) {

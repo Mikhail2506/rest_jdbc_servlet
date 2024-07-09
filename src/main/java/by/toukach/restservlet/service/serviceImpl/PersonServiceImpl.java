@@ -29,16 +29,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person addPerson(PersonDTO personDTOSave) {
-         //personRepository.save(personMapper.map(personDTOSave));
-         Person person = personRepository.
-                 findById(personMapper.map(personRepository.
-                         save(personMapper.map(personDTOSave))).getPersonId());
-        //return personMapper.map(personRepository.findById(person.getPersonId()));
+    public PersonDTO addPerson(PersonDTO personDTOSave) {
+        Person person = personRepository.save(personDTOSave);
+        return personMapper.map(personRepository.findById(person.getPersonId()));
 //        Person person = personMapper.map(personDTOSave);
 //        return personRepository.save(person);
-
-        return person;
     }
 
     @Override

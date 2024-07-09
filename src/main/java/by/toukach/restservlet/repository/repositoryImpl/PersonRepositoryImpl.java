@@ -2,6 +2,9 @@ package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.db.ConnectionManagerImpl;
+import by.toukach.restservlet.dto.PersonDTO;
+import by.toukach.restservlet.dto.PersonSectionDTO;
+import by.toukach.restservlet.dto.PhoneNumberDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PersonToSection;
@@ -35,7 +38,11 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     @Override
-    public Person save(Person personToSave) {
+    public Person save(PersonDTO personToSave) {
+
+        Person person = new Person();
+        person.setPhoneNumbersList(new ArrayList<>());
+        person.setPersonSection(new ArrayList<>());
 
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement insertPersonStatement = connection
@@ -56,43 +63,47 @@ public class PersonRepositoryImpl implements PersonRepository {
             }
 
             // Получение ID вставленной персоны
-            int personId;
+            Integer personId;
             try (ResultSet generatedKeys = insertPersonStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    personId = generatedKeys.getInt("id");
+                    personId = generatedKeys.getInt(1);
+
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
 
             // Вставка номеров телефона
-            for (PhoneNumber phone : personToSave.getPhoneNumbersList()) {
+            //for (PhoneNumber phone : personToSave.getPhoneNumbersList()) {
+            for (PhoneNumberDTO phone : personToSave.getPhoneNumberDTOList()) {
                 insertPhoneStatement.setString(1, String.valueOf(phone));
                 insertPhoneStatement.setInt(2, personId);
                 insertPhoneStatement.executeUpdate();
             }
 
             // Вставка связей персоны с секциями
-            for (PersonSection section : personToSave.getPersonSectionList()) {
-                int sectionId = getSectionIdByName(connection, section.getSectionName());
+//            for (PersonSection section : personToSave.getPersonSectionList()) {
+            for (PersonSectionDTO section : personToSave.getPersonSectionDTOList()) {
+                int sectionId = getSectionIdByName(connection, section.getPersonSectionDTOName());
                 if (sectionId != -1) {
                     insertPersonSectionStatement.setInt(1, personId);
                     insertPersonSectionStatement.setInt(2, sectionId);
                     insertPersonSectionStatement.executeUpdate();
                 } else {
                     // Если секция не найдена, можно либо пропустить, либо вставить новую секцию
-                    System.out.println("Section not found: " + section.getSectionName());
+                    System.out.println("Section not found: " + section.getPersonSectionDTOName());
                 }
             }
 
             // Создание объекта Person с полученными данными
-            Person person = null;
             person.setPersonId(personId);
             person.setPersonName(personToSave.getPersonName());
             person.setPersonSurname(personToSave.getPersonSurname());
             person.setPersonAge(personToSave.getPersonAge());
-            person.setPhoneNumbersList(personToSave.getPhoneNumbersList());
-            person.setPersonSection(personToSave.getPersonSectionList());
+//            personToSave.getPhoneNumbersList(),
+//            personToSave.getPersonSectionList());
+            person.getPersonSectionList();
+            person.getPersonSectionList();
 
             return person;
         } catch (SQLException e) {

@@ -1,5 +1,6 @@
 package by.toukach.restservlet.repository;
 
+import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
 
@@ -8,7 +9,7 @@ import java.util.Optional;
 
 public interface PersonRepository {
 
-    Person save(Person person);
+    Person save(PersonDTO person);
 
     void update(Person person);
 
