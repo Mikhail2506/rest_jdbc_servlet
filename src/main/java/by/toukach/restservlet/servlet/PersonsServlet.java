@@ -87,23 +87,6 @@ public class PersonsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse resp) throws ServletException, IOException {
-//        setJsonHeader(resp);
-//        String json = getJson(request);
-//
-//        Optional<PersonDTO> userResponse;
-//        String responseAnswer;
-//        try {
-//            userResponse = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
-//            PersonDTO personDTOSave = userResponse.orElseThrow(IllegalArgumentException::new);
-//            responseAnswer = objectMapper.writeValueAsString(personService.addPerson(personDTOSave));
-//        } catch (Exception e) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            responseAnswer = "Incorrect user Object.";
-//        }
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.write(responseAnswer);
-//        printWriter.flush();
-
 
             setJsonHeader(resp);
             String json = getJson(request);
@@ -120,7 +103,6 @@ public class PersonsServlet extends HttpServlet {
                 resp.getWriter().write("Incorrect user Object.");
             }
         }
-
 
         @Override
         protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
