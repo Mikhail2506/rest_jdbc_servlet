@@ -1,6 +1,7 @@
 package by.toukach.restservlet.servlet;
 
 import by.toukach.restservlet.dto.PersonDTO;
+import by.toukach.restservlet.dto.PersonDTOSave;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
@@ -62,10 +63,10 @@ public class PersonsServlet extends HttpServlet {
                 responseAnswer = objectMapper.writeValueAsString(personList);
             } else {
                 int id = Integer.parseInt(parameter);
-                PersonDTO person = personService.readPerson(id);
-                if (person != null) {
+                PersonDTO personDTO = personService.readPerson(id);
+                if (personDTO != null) {
                     resp.setStatus(HttpServletResponse.SC_OK);
-                    responseAnswer = objectMapper.writeValueAsString(personMapper.map(person));
+                    responseAnswer = objectMapper.writeValueAsString(personDTO);
                 } else {
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     responseAnswer = "Person not found with id: " + id;
@@ -84,111 +85,89 @@ public class PersonsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setJsonHeader(resp);
-        String json = getJson(req);
-
-        String responseAnswer = "";
-        Optional<PersonDTO> dto;
-        try {
-            dto = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
-            PersonDTO userToSave = dto.orElseThrow(IllegalArgumentException::new);
-            responseAnswer = objectMapper.writeValueAsString(personService.addPerson(userToSave));
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            responseAnswer = "Incorrect user Object.";
-        }
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write(responseAnswer);
-        printWriter.flush();
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setJsonHeader(resp);
-        String json = getJson(req);
-
-        String responseAnswer = "";
-        Optional<PersonDTO> personUpdating;
-        try {
-            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
-            PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
-            personService.updatePerson(personDTO);
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            responseAnswer = "Incorrect user Object.";
-        }
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write(responseAnswer);
-        printWriter.flush();
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setJsonHeader(resp);
-        String responseAnswer = "";
-        try {
-//        String[] pathPart = req.getPathInfo().split("/");
-//        Long userId = Long.parseLong(pathPart[1]);
-
-            int personId = Integer.parseInt(req.getParameter("id"));
-
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            personService.deletePerson(personId);
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            responseAnswer = "Bad request.";
-        }
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write(responseAnswer);
-        printWriter.flush();
-    }
-
-
-//    public void controllerGet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse resp) throws ServletException, IOException {
+//        setJsonHeader(resp);
+//        String json = getJson(request);
 //
-//        String responseAnswer = "";
-//        String action = req.getRequestURI();
-//        //System.out.println(action);
-//        String query = req.getQueryString();
-//        //System.out.println(query);
-//        // String action = req.getServletPath();
-//        // System.out.println(action);
-//
-//        // resp.setContentType("application/json");
-//
-//        PrintWriter printWriter = resp.getWriter();
-//
+//        Optional<PersonDTO> userResponse;
+//        String responseAnswer;
 //        try {
-//            if (action.equals("/id")) {
-//                Long id = Long.parseLong(req.getParameter("id"));
-////                PersonDTO dto = personMapper.entityToDto(personService.readPerson(id));
-////                resp.setStatus(HttpServletResponse.SC_OK);
-////               String responseAnswer = personMapper.toString(dto);
-////                printWriter.write(personMapper.(dto));
-//
-//                PersonDTO dto = personMapper.entityToDto(personService.readPerson(id));
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                responseAnswer = personMapper.mapperDTOToJson(dto);
-//                // printWriter.write(responseAnswer);
-//            } else if (action.equals("/")) {
-//                List<Person> personList = personRepository.findAll();
-//
-////                req.setAttribute("persons", personList);
-////                req.getRequestDispatcher("/WEB-INF/persons.jsp").forward(req, resp);
-////                personService.readPersons();
-//
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                responseAnswer = objectMapper.writeValueAsString(personList);
-//            }
+//            userResponse = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
+//            PersonDTO personDTOSave = userResponse.orElseThrow(IllegalArgumentException::new);
+//            responseAnswer = objectMapper.writeValueAsString(personService.addPerson(personDTOSave));
 //        } catch (Exception e) {
 //            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            responseAnswer = "Bad request.";
+//            responseAnswer = "Incorrect user Object.";
 //        }
-//        printWriter = resp.getWriter();
+//        PrintWriter printWriter = resp.getWriter();
 //        printWriter.write(responseAnswer);
 //        printWriter.flush();
-//    }
+
+
+            setJsonHeader(resp);
+            String json = getJson(request);
+
+            try {
+                PersonDTO personDTOSave = objectMapper.readValue(json, PersonDTO.class);
+                Person savedPerson = personService.addPerson(personDTOSave);
+                String responseAnswer = objectMapper.writeValueAsString(savedPerson);
+                PrintWriter printWriter = resp.getWriter();
+                printWriter.write(responseAnswer);
+                printWriter.flush();
+            } catch (Exception e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("Incorrect user Object.");
+            }
+        }
+
+
+        @Override
+        protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            setJsonHeader(resp);
+            String json = getJson(req);
+
+//        String responseAnswer = "";
+//        Optional<PersonDTO> personUpdating;
+//        try {
+//            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
+//            PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
+//            personService.updatePerson(personDTO);
+
+            String responseAnswer = null;
+            Optional<PersonDTO> personResponse;
+            try {
+                personResponse = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
+                PersonDTO person = personResponse.orElseThrow(IllegalArgumentException::new);
+                responseAnswer = objectMapper.writeValueAsString(personService.addPerson(person));
+            } catch (Exception e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                responseAnswer = "Incorrect user Object.";
+            }
+            PrintWriter printWriter = resp.getWriter();
+            printWriter.write(responseAnswer);
+            printWriter.flush();
+        }
+
+        @Override
+        protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            setJsonHeader(resp);
+            String responseAnswer = "";
+
+            try {
+                String[] pathPart = req.getPathInfo().split("/");
+                int personId = Integer.parseInt(pathPart[1]);
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                personService.deletePerson(personId);
+            } catch (Exception e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                responseAnswer = "Bad request.";
+            }
+            PrintWriter printWriter = resp.getWriter();
+            printWriter.write(responseAnswer);
+            printWriter.flush();
+        }
+
 
 //    public void controllerPost(HttpServletRequest req, HttpServletResponse resp) {
 //        String uri = req.getRequestURI();
@@ -204,7 +183,7 @@ public class PersonsServlet extends HttpServlet {
 //        }
 //    }
 
-    //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
+        //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
 //        String uri = req.getRequestURI();
 //        switch (uri) {
 //            case "": {
@@ -224,18 +203,8 @@ public class PersonsServlet extends HttpServlet {
 //            }
 //        }
 //    }
-//
-//    public void controllerDelete(HttpServletRequest req, HttpServletResponse resp) {
-//        String uri = req.getRequestURI();
-//        switch (uri) {
-//            case "/id": {
-//                personService.deletePerson(1L);
-//                break;
-//            }
-//        }
-//    }
-//
-    @Override
-    public void destroy() {
+
+        @Override
+        public void destroy () {
+        }
     }
-}

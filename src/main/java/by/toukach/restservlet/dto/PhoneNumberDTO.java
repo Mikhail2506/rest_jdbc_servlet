@@ -2,23 +2,20 @@ package by.toukach.restservlet.dto;
 
 public class PhoneNumberDTO {
 
-    private Integer id;
+    // private Integer phoneNumberDTOId;
 
     private String number;
 
-    private PersonDTO personDTO;
-
-    public PhoneNumberDTO(){
+    public PhoneNumberDTO() {
     }
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getPhoneNumberDTOId() {
+//        return phoneNumberDTOId;
+//    }
+//
+//    public void setPhoneNumberDTOId(Integer phoneNumberDTOId) {
+//        this.phoneNumberDTOId = phoneNumberDTOId;
+//    }
 
     public String getNumber() {
         return number;
@@ -28,18 +25,19 @@ public class PhoneNumberDTO {
         this.number = number;
     }
 
-    public PersonDTO getPersonDTO() {
-        return personDTO;
-    }
+//    public PhoneNumberDTO(Integer phoneNumberDTOId, String number) {
+//        this.phoneNumberDTOId = phoneNumberDTOId;
+//        this.number = number;
+//    }
 
-    public void setPersonDTO(PersonDTO personDTO) {
-        this.personDTO = personDTO;
-    }
-
-    public PhoneNumberDTO(Integer id, String number, PersonDTO personDTO) {
-        this.id = id;
+    public PhoneNumberDTO(String number) {
         this.number = number;
-        this.personDTO = personDTO;
     }
 
+    @Override
+    public String toString() {
+        return "PhoneNumberDTO{" +
+                "number='" + number + '\'' +
+                '}';
+    }
 }

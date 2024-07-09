@@ -6,25 +6,22 @@ import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
 public class PhoneNumber {
 
     private static final PersonRepository personRepository = PersonRepositoryImpl.getInstance();
-    private int phoneNumberId;
+    private Integer phoneNumberId;
     private String number;
-    private Person person;
 
     public PhoneNumber() {
     }
 
-    public PhoneNumber(Integer phoneNumberId, String number, Person person) {
+    public PhoneNumber(Integer phoneNumberId, String number) {
         this.phoneNumberId = phoneNumberId;
         this.number = number;
-        this.person = person;
-
     }
 
-    public int getPhoneNumberId() {
+    public Integer getPhoneNumberId() {
         return phoneNumberId;
     }
 
-    public void setPhoneNumberId(int phoneNumberId) {
+    public void setPhoneNumberId(Integer phoneNumberId) {
         this.phoneNumberId = phoneNumberId;
     }
 
@@ -34,18 +31,5 @@ public class PhoneNumber {
 
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public Person getPerson() {
-        if (person != null && person.getPersonId() > 0 && person.getPersonName() == null) {
-            this.person = personRepository.findById(person.getPersonId()).orElse(person);
-        } else if (person != null && person.getPersonId() == 0) {
-            this.person = null;
-        }
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 }

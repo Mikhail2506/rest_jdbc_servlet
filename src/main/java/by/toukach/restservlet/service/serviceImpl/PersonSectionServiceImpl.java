@@ -60,14 +60,14 @@ public class PersonSectionServiceImpl implements PersonSectionService {
     @Override
     public PersonSectionDTO findById(int personSectionId) throws NotFoundException {
         PersonSection personSection = personSectionsRepository.findById(personSectionId).orElseThrow(() ->
-                new NotFoundException("Department not found."));
+                new NotFoundException("Section not found."));
         return personSectionMapper.map(personSection);
     }
 
     @Override
     public List<PersonSectionDTO> findAll() {
         List<PersonSection> personSectionList = personSectionsRepository.findAll();
-        return personSectionMapper.mapUpdateList(personSectionList);
+        return personSectionMapper.map(personSectionList);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class PersonSectionServiceImpl implements PersonSectionService {
                     personId,
                     personSectionId
             );
-            personToSectionRepository.save(personToSection);
+            personToSectionRepository.save(personId, personSectionId);
         } else {
             throw new NotFoundException("User not found.");
         }

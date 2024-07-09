@@ -12,7 +12,7 @@ public interface PhoneNumberService {
 
     void update(PhoneNumberDTO phoneNumberDTO) throws NotFoundException;
 
-    PhoneNumberDTO findById(int phoneNumberId) throws NotFoundException;
+   // PhoneNumberDTO findById(int phoneNumberId) throws NotFoundException;
 
     List<PhoneNumberDTO> findAll();
 

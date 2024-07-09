@@ -17,5 +17,4 @@ public interface PhoneNumberMapper {
 
     List<PhoneNumber> mapUpdateList(List<PhoneNumberDTO> phoneNumberDTOList);
 
-
 }

@@ -1,36 +1,43 @@
 package by.toukach.restservlet.dto;
 
-import java.util.List;
-
 public class PersonSectionDTO {
 
-    private String sectionName;
+   // private Integer personSectionDTOId;
 
-    private List<PersonDTO> personDTOList;
+    private String personSectionDTOName;
 
     public PersonSectionDTO() {
 
     }
 
-    public PersonSectionDTO(String sectionName, List<PersonDTO> personDTOList) {
+    public PersonSectionDTO(
+           // Integer personSectionDTOId,
+            String personSectionDTOName) {
 
-        this.sectionName = sectionName;
-        this.personDTOList = personDTOList;
+        //this.personSectionDTOId = personSectionDTOId;
+        this.personSectionDTOName = personSectionDTOName;
     }
 
-    public String getSectionName() {
-        return sectionName;
+//    public Integer getPersonSectionDTOId() {
+//        return personSectionDTOId;
+//    }
+//
+//    public void setPersonSectionDTOId(Integer personSectionDTOId) {
+//        this.personSectionDTOId = personSectionDTOId;
+//    }
+
+    public String getPersonSectionDTOName() {
+        return personSectionDTOName;
     }
 
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
+    public void setPersonSectionDTOName(String personSectionDTOName) {
+        this.personSectionDTOName = personSectionDTOName;
     }
 
-    public List<PersonDTO> getPersonList() {
-        return personDTOList;
-    }
-
-    public void setPersonList(List<PersonDTO> personDTOList) {
-        this.personDTOList = personDTOList;
+    @Override
+    public String toString() {
+        return "PersonSectionDTO{" +
+                "personSectionDTOName='" + personSectionDTOName + '\'' +
+                '}';
     }
 }

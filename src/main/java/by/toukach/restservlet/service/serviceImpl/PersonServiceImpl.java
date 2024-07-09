@@ -29,8 +29,15 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person addPerson(PersonDTO personDTO) {
-        Person person = personRepository.save(personMapper.map(personDTO));
+    public Person addPerson(PersonDTO personDTOSave) {
+         //personRepository.save(personMapper.map(personDTOSave));
+         Person person = personRepository.
+                 findById(personMapper.map(personRepository.
+                         save(personMapper.map(personDTOSave))).getPersonId());
+        //return personMapper.map(personRepository.findById(person.getPersonId()));
+//        Person person = personMapper.map(personDTOSave);
+//        return personRepository.save(person);
+
         return person;
     }
 
@@ -47,18 +54,18 @@ public class PersonServiceImpl implements PersonService {
         } catch (NotFoundException e) {
             System.out.println("Person with id " + id + " does not exist in DB!!!");
         }
-        Person person = personRepository.findById(id).orElseThrow();
+        Person person = personRepository.findById(id);
         return personMapper.map(person);
     }
 
     @Override
-    public void deletePerson(int id) {
+    public void deletePerson(int personId) {
         try {
-            checkExistPerson(id);
+            checkExistPerson(personId);
         } catch (NotFoundException e) {
-            System.out.println("Person with id " + id + " does not exist in DB!!!");
+            System.out.println("Person with id " + personId + " does not exist in DB!!!");
         }
-        personRepository.deleteById(id);
+        personRepository.deletePersonById(personId);
     }
 
     @Override

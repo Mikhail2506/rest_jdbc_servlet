@@ -3,12 +3,12 @@ DROP TABLE IF EXISTS persons_sections CASCADE;
 DROP TABLE IF EXISTS sections CASCADE;
 DROP TABLE IF EXISTS phone_numbers CASCADE;
 
--- Создание таблицы personDTO
+-- Создание таблицы person
 CREATE TABLE IF NOT EXISTS persons
 (
     id      SERIAL PRIMARY KEY,
-    name    VARCHAR(50) NOT NULL,
-    surname VARCHAR(50) NOT NULL,
+    name    VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
     age INT NOT NULL
 );
 
@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS persons
 CREATE TABLE IF NOT EXISTS sections
 (
     id   SERIAL PRIMARY KEY,
-    section_name VARCHAR(50) NOT NULL
+    section_name VARCHAR(255) NOT NULL
 );
 
 -- Создание таблицы phone_number
 CREATE TABLE IF NOT EXISTS phone_numbers
 (
     id        SERIAL PRIMARY KEY,
-    phone     VARCHAR(20) NOT NULL,
+    phone     VARCHAR(255) NOT NULL,
     person_id INT         NOT NULL,
     FOREIGN KEY (person_id) REFERENCES persons (id)
 );

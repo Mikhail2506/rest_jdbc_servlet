@@ -19,11 +19,13 @@ public interface PersonToSectionRepository {
 
     List<PersonToSection> findAllBySectionId(int sectionId);
 
+    List<PersonToSection> findAll();
+
     List<Person> findPersonsBySectionId(int sectionId);
 
     Optional<PersonToSection> findByPersonIdAndSectiontId(int personId, int sectionId);
 
-    PersonToSection save(PersonToSection personToSection);
+    PersonToSection save(int personId, int sectionId);
 
     boolean exitsById(int personId);
 }

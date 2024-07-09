@@ -1,6 +1,8 @@
 package by.toukach.restservlet.mapper.impl;
 
+import by.toukach.restservlet.dto.PersonSectionDTO;
 import by.toukach.restservlet.dto.PhoneNumberDTO;
+import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.PersonSectionMapper;
@@ -29,17 +31,16 @@ public class PhoneNumberMapperImpl implements PhoneNumberMapper {
     public PhoneNumber map(PhoneNumberDTO phoneNumberDTO) {
         return new PhoneNumber(
                 null,
-                phoneNumberDTO.getNumber(),
-              personMapper.map(phoneNumberDTO.getPersonDTO())
+                //phoneNumberDTO.getPhoneNumberDTOId(),
+                phoneNumberDTO.getNumber()
         );
     }
 
     @Override
     public PhoneNumberDTO map(PhoneNumber phoneNumber) {
         return new PhoneNumberDTO(
-                phoneNumber.getPhoneNumberId(),
-                phoneNumber.getNumber(),
-               personMapper.map(phoneNumber.getPerson())
+                //phoneNumber.getPhoneNumberId(),
+                phoneNumber.getNumber()
         );
     }
 

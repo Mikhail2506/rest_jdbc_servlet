@@ -24,7 +24,7 @@ public class Person {
 
     private String personSurname;
 
-    private int personAge;
+    private Integer personAge;
 
     List<PhoneNumber> phoneNumbersList;
 
@@ -33,15 +33,15 @@ public class Person {
     public Person() {
     }
 
-    public Person(int personId, String personName, String personSurname, int personAge,
+    public Person(Integer personId, String personName, String personSurname, Integer personAge,
                   List<PhoneNumber> phoneNumbersList, List<PersonSection> personSectionList) {
-        super();
         this.personId = personId;
         this.personName = personName;
         this.personSurname = personSurname;
         this.personAge = personAge;
         this.phoneNumbersList = phoneNumbersList;
         this.personSectionList = personSectionList;
+
     }
 
     public int getPersonId() {
@@ -68,11 +68,11 @@ public class Person {
         this.personSurname = personSurname;
     }
 
-    public int getPersonAge() {
+    public Integer getPersonAge() {
         return personAge;
     }
 
-    public void setPersonAge(int personAge) {
+    public void setPersonAge(Integer personAge) {
         this.personAge = personAge;
     }
 
@@ -88,13 +88,14 @@ public class Person {
     }
 
     public List<PersonSection> getPersonSectionList() {
-        if (personSectionList == null) {
-            this.personSectionList = personToSectionRepository.findSectionByPersonId(this.personId);
-        }
+//        if (personSectionList == null) {
+//            this.personSectionList = personToSectionRepository.findSectionByPersonId(this.personId);
+//        }
         return personSectionList;
     }
 
     public void setPersonSection(List<PersonSection> personSectionList) {
         this.personSectionList = personSectionList;
     }
+
 }

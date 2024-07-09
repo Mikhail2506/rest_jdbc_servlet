@@ -26,7 +26,8 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
 
     @Override
     public void update(PhoneNumberDTO phoneNumberDTO) throws NotFoundException {
-        if (phoneNumbersRepository.exitsById(phoneNumberDTO.getId())) {
+        //if (phoneNumbersRepository.exitsById(phoneNumberDTO.getPhoneNumberDTOId())) {
+            if (phoneNumbersRepository.exists(phoneNumberDTO.getNumber())) {
             PhoneNumber phoneNumber = phoneNumberMapper.map(phoneNumberDTO);
             phoneNumbersRepository.update(phoneNumber);
         } else {
@@ -34,19 +35,17 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
         }
     }
 
-    @Override
-    public PhoneNumberDTO findById(int phoneNumberId) throws NotFoundException {
+//    @Override
+//    public PhoneNumberDTO findById(int phoneNumberId) throws NotFoundException {
 //        PhoneNumber phoneNumber = phoneNumbersRepository.findById(phoneNumberId).orElseThrow(() ->
 //                new NotFoundException("PhoneNumber not found."));
-//        return phoneNumberDtoMapper.map(phoneNumber);
-        return null;
-    }
+//        return phoneNumberMapper.map(phoneNumber);
+//    }
 
     @Override
     public List<PhoneNumberDTO> findAll() {
-//        List<PhoneNumber> phoneNumberList = phoneNumbersRepository.findAll();
-//        return phoneNumberDtoMapper.map(phoneNumberList);
-        return null;
+        List<PhoneNumber> phoneNumberList = phoneNumbersRepository.findAll();
+        return phoneNumberMapper.map(phoneNumberList);
     }
 
     @Override

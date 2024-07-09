@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PersonService {
 
-    Person addPerson(PersonDTO personDTO);
+    Person addPerson(PersonDTO personDTOSave);
 
     List<PersonDTO> readPersons()throws SQLException;
 

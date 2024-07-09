@@ -24,23 +24,28 @@ public class PersonSectionMapperImpl implements PersonSectionMapper {
     public PersonSection map(PersonSectionDTO personSectionDTO) {
         return new PersonSection(
                 null,
-                personSectionDTO.getSectionName(),
-                null
+                 //personSectionDTO.getPersonSectionDTOId(),
+                personSectionDTO.getPersonSectionDTOName()
         );
     }
 
     @Override
     public PersonSectionDTO map(PersonSection personSection) {
-        return null;
+
+        return new PersonSectionDTO(
+                //personSection.getSectionId(),
+                personSection.getSectionName()
+        );
     }
 
-    @Override
-    public List<PersonSectionDTO> mapUpdateList(List<PersonSection> personSectionList) {
-        return List.of();
+    public List<PersonSectionDTO> map(List<PersonSection> personSectionList) {
+
+        return personSectionList.stream().map(this::map).toList();
     }
 
     @Override
     public List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList) {
-        return List.of();
+
+        return personSectionDTOList.stream().map(this::map).toList();
     }
 }

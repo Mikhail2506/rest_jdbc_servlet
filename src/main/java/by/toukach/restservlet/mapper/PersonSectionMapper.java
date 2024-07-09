@@ -15,5 +15,5 @@ public interface PersonSectionMapper {
 
     List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList);
 
-    List<PersonSectionDTO> mapUpdateList(List<PersonSection> personSectionList);
+    List<PersonSectionDTO> map(List<PersonSection> personSectionList);
 }

@@ -20,4 +20,8 @@ public interface PhoneNumbersRepository {
     List<PhoneNumber> findAllByPersonId(int id);
 
     boolean exitsById(int id);
+
+    Optional<PhoneNumber>findById(int phoneNumberId);
+
+    List<PhoneNumber> findAll();
 }

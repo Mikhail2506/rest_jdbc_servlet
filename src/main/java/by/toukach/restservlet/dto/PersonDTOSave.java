@@ -2,9 +2,7 @@ package by.toukach.restservlet.dto;
 
 import java.util.List;
 
-public class PersonDTO {
-
-    private Integer personId;
+public class PersonDTOSave {
 
     private String personName;
 
@@ -16,32 +14,17 @@ public class PersonDTO {
 
     private List<PersonSectionDTO> personSectionDTOList;
 
-    public PersonDTO() {
+    public PersonDTOSave() {
     }
 
-    public PersonDTO(Integer personId, String personName, String personSurname, int personAge,
-                     List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
-        this.personId = personId;
+    public PersonDTOSave(String personName, String personSurname, int personAge,
+                         List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
         this.personName = personName;
         this.personSurname = personSurname;
         this.personAge = personAge;
         this.phoneNumberDTOList = phoneNumberDTOList;
         this.personSectionDTOList = personSectionDTOList;
 
-    }
-
-    public PersonDTO(String personName, String personSurname, int personAge,
-                     List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
-        this.personName = personName;
-        this.personSurname = personSurname;
-        this.personAge = personAge;
-        this.phoneNumberDTOList = phoneNumberDTOList;
-        this.personSectionDTOList = personSectionDTOList;
-
-    }
-
-    public Integer getPersonId() {
-        return personId;
     }
 
     public String getPersonName() {
@@ -88,7 +71,7 @@ public class PersonDTO {
 
     @Override
     public String toString() {
-        return "PersonDTO{" +
+        return "PersonDTOSave{" +
                 "personName='" + personName + '\'' +
                 ", personSurname='" + personSurname + '\'' +
                 ", personAge=" + personAge +

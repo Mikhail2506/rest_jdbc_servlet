@@ -2,7 +2,9 @@ package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.db.ConnectionManagerImpl;
+import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
+import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.repository.PersonSectionsRepository;
 
 
@@ -32,9 +34,8 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
     private static PersonSection createPersonSection(ResultSet resultSet) throws SQLException {
 
         PersonSection personSection = new PersonSection(
-                resultSet.getInt("id"),
-                resultSet.getString("name"),
-                null);
+                resultSet.getInt("section_id"),
+                resultSet.getString("section_name"));
         return personSection;
     }
 
@@ -50,11 +51,9 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 personSection = new PersonSection(
-                        resultSet.getInt("id"),
-                        personSection.getSectionName(),
-                        null
+                        resultSet.getInt("section_id"),
+                        personSection.getSectionName()
                 );
-                personSection.getPersonList();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,20 +92,20 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
 
     @Override
     public List<PersonSection> findAllBYPersonId(int personId) {
-        PersonSection personSection = null;
+        List<PersonSection> personSection = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
 
-            preparedStatement.setLong(1, personId);
+            preparedStatement.setInt(1, personId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                personSection = PersonSectionsRepositoryImpl.createPersonSection(resultSet);
+                personSection.add(PersonSectionsRepositoryImpl.createPersonSection(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (List<PersonSection>) personSection;
+        return personSection;
     }
 
     @Override
