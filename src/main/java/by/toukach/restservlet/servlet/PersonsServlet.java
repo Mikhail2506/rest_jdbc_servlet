@@ -88,86 +88,68 @@ public class PersonsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse resp) throws ServletException, IOException {
 
-            setJsonHeader(resp);
-            String json = getJson(request);
+        setJsonHeader(resp);
+        String json = getJson(request);
 
-            try {
-                PersonDTO personDTOSave = objectMapper.readValue(json, PersonDTO.class);
-                PersonDTO savedPerson = personService.addPerson(personDTOSave);
-                String responseAnswer = objectMapper.writeValueAsString(savedPerson);
-                PrintWriter printWriter = resp.getWriter();
-                printWriter.write(responseAnswer);
-                printWriter.flush();
-            } catch (Exception e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().write("Incorrect user Object.");
-            }
-        }
-
-        @Override
-        protected void doPut (HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            setJsonHeader(resp);
-            String json = getJson(req);
-
-//        String responseAnswer = "";
-//        Optional<PersonDTO> personUpdating;
-//        try {
-//            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
-//            PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
-//            personService.updatePerson(personDTO);
-
-            String responseAnswer = null;
-            Optional<PersonDTO> personResponse;
-            try {
-                personResponse = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
-                PersonDTO person = personResponse.orElseThrow(IllegalArgumentException::new);
-                responseAnswer = objectMapper.writeValueAsString(personService.addPerson(person));
-            } catch (Exception e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                responseAnswer = "Incorrect user Object.";
-            }
+        try {
+            PersonDTO personDTOSave = objectMapper.readValue(json, PersonDTO.class);
+            PersonDTO savedPerson = personService.addPerson(personDTOSave);
+            String responseAnswer = objectMapper.writeValueAsString(savedPerson);
             PrintWriter printWriter = resp.getWriter();
             printWriter.write(responseAnswer);
             printWriter.flush();
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write("Incorrect user Object.");
         }
+    }
 
-        @Override
-        protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            setJsonHeader(resp);
-            String responseAnswer = "";
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setJsonHeader(resp);
+        String json = getJson(req);
 
-            try {
-                String requestURI = req.getRequestURI();
-                String[] parts = requestURI.split("/");
-                String parameter = parts[parts.length - 1];
-                int personId = Integer.parseInt(parameter);
-                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                personService.deletePerson(personId);
-            } catch (Exception e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                responseAnswer = "Bad request.";
-            }
-            PrintWriter printWriter = resp.getWriter();
-            printWriter.write(responseAnswer);
-            printWriter.flush();
+        String responseAnswer = "";
+        Optional<PersonDTO> personUpdating;
+        try {
+//            String requestURI = req.getRequestURI();
+//            String[] parts = requestURI.split("/");
+//            String parameter = parts[parts.length - 1];
+//            int id = Integer.parseInt(parameter);
+            personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
+            PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
+            personService.updatePerson(personDTO);
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            responseAnswer = "Incorrect user Object.";
         }
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(responseAnswer);
+        printWriter.flush();
+    }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setJsonHeader(resp);
+        String responseAnswer = "";
 
-//    public void controllerPost(HttpServletRequest req, HttpServletResponse resp) {
-//        String uri = req.getRequestURI();
-//        switch (uri) {
-//            case "": {
-//                String json = req.getQueryString();
-//                PersonDTO dto = personMapper.mapperJsonToDTO(json);
-//                personService.addPerson(dto);
-//
-//               // personService.addPerson(personMapper.dtoToEntity(dto));
-//                break;
-//            }
-//        }
-//    }
+        try {
+            String requestURI = req.getRequestURI();
+            String[] parts = requestURI.split("/");
+            String parameter = parts[parts.length - 1];
+            int personId = Integer.parseInt(parameter);
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            personService.deletePerson(personId);
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            responseAnswer = "Bad request.";
+        }
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write(responseAnswer);
+        printWriter.flush();
+    }
 
-        //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
+    //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
 //        String uri = req.getRequestURI();
 //        switch (uri) {
 //            case "": {
@@ -188,7 +170,7 @@ public class PersonsServlet extends HttpServlet {
 //        }
 //    }
 
-        @Override
-        public void destroy () {
-        }
+    @Override
+    public void destroy() {
     }
+}

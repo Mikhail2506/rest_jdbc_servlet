@@ -62,7 +62,6 @@ public class PersonRepositoryImpl implements PersonRepository {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
 
-            // Получение ID вставленной персоны
             Integer personId;
             try (ResultSet generatedKeys = insertPersonStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -73,16 +72,12 @@ public class PersonRepositoryImpl implements PersonRepository {
                 }
             }
 
-            // Вставка номеров телефона
-            //for (PhoneNumber phone : personToSave.getPhoneNumbersList()) {
             for (PhoneNumberDTO phone : personToSave.getPhoneNumberDTOList()) {
                 insertPhoneStatement.setString(1, String.valueOf(phone));
                 insertPhoneStatement.setInt(2, personId);
                 insertPhoneStatement.executeUpdate();
             }
 
-            // Вставка связей персоны с секциями
-//            for (PersonSection section : personToSave.getPersonSectionList()) {
             for (PersonSectionDTO section : personToSave.getPersonSectionDTOList()) {
                 int sectionId = getSectionIdByName(connection, section.getPersonSectionDTOName());
                 if (sectionId != -1) {
@@ -90,18 +85,14 @@ public class PersonRepositoryImpl implements PersonRepository {
                     insertPersonSectionStatement.setInt(2, sectionId);
                     insertPersonSectionStatement.executeUpdate();
                 } else {
-                    // Если секция не найдена, можно либо пропустить, либо вставить новую секцию
                     System.out.println("Section not found: " + section.getPersonSectionDTOName());
                 }
             }
 
-            // Создание объекта Person с полученными данными
             person.setPersonId(personId);
             person.setPersonName(personToSave.getPersonName());
             person.setPersonSurname(personToSave.getPersonSurname());
             person.setPersonAge(personToSave.getPersonAge());
-//            personToSave.getPhoneNumbersList(),
-//            personToSave.getPersonSectionList());
             person.getPersonSectionList();
             person.getPersonSectionList();
 
@@ -129,18 +120,60 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     @Override
     public void update(Person person) {
+
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERSON_SQL)) {
+             PreparedStatement personStatement = connection.
+                     prepareStatement(UPDATE_PERSON_SQL);
+             PreparedStatement phoneNumberStatement = connection.
+                     prepareStatement(SAVE_PERSON_PHONE_NUMBER_SQL);
+             PreparedStatement personSectionStatement = connection.
+                     prepareStatement(DELETE_PERSON_FROM_SECTIONS_BY_PERSON_ID_SQL);
+             PreparedStatement personSectionInsertStatement = connection.
+                     prepareStatement(SAVE_PERSON_TO_SECTION_SQL)) {
 
-            preparedStatement.setString(1, person.getPersonName());
-            preparedStatement.setString(2, person.getPersonSurname());
-            preparedStatement.setLong(3, person.getPersonAge());
+            personStatement.setString(1, person.getPersonName());
+            personStatement.setString(2, person.getPersonSurname());
+            personStatement.setInt(3, person.getPersonAge());
+            personStatement.setInt(4, person.getPersonId());
+            personStatement.executeUpdate();
 
-            preparedStatement.executeUpdate();
-            savePersonPhoneNumbers(person);
-            savePersonsSections(person);
+            // Обновление телефонов персоны
+            deletePersonPhoneNumbers(connection, person.getPersonId());
+            for (PhoneNumber phoneNumber : person.getPhoneNumbersList()) {
+                phoneNumberStatement.setString(1, String.valueOf(phoneNumber));
+                phoneNumberStatement.setInt(2, person.getPersonId());
+                phoneNumberStatement.executeUpdate();
+            }
+
+            // Обновление секций персоны
+            deletePersonSections(connection, person.getPersonId());
+            for (PersonSection section : person.getPersonSectionList()) {
+                int sectionId = getSectionIdByName(connection, section.getSectionName());
+                if (sectionId != -1) {
+                    personSectionInsertStatement.setInt(1, person.getPersonId());
+                    personSectionInsertStatement.setInt(2, sectionId);
+                    personSectionInsertStatement.executeUpdate();
+                } else {
+                    System.out.println("Section not found: " + section.getSectionName());
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void deletePersonPhoneNumbers(Connection connection, int personId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_PHONE_NUMBERS_BY_PERSON_ID_SQL)) {
+            statement.setInt(1, personId);
+            statement.executeUpdate();
+        }
+    }
+
+    private void deletePersonSections(Connection connection, int personId) throws SQLException {
+
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_PERSON_FROM_SECTIONS_BY_PERSON_ID_SQL)) {
+            statement.setInt(1, personId);
+            statement.executeUpdate();
         }
     }
 

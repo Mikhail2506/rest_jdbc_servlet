@@ -31,6 +31,7 @@ public class PersonsDataBaseQueries {
                 WHERE id = ?;
             """;
 
+
     public static final String DELETE_PERSON_BY_ID_SQL = """
             DELETE
                 FROM public.persons
