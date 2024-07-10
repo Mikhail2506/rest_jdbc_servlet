@@ -9,19 +9,13 @@ import java.util.Optional;
 
 public interface PersonToSectionRepository {
 
-    boolean deleteByPersonId(int id);
+    void deleteByPersonId(int id);
 
     boolean deleteBySectionId(int id);
 
     List<PersonToSection> findAllByPersonId(int personId);
 
-    List<PersonSection> findSectionByPersonId(int personId);
-
-    List<PersonToSection> findAllBySectionId(int sectionId);
-
     List<PersonToSection> findAll();
-
-    List<Person> findPersonsBySectionId(int sectionId);
 
     Optional<PersonToSection> findByPersonIdAndSectiontId(int personId, int sectionId);
 

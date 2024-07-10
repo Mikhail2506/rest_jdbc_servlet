@@ -27,7 +27,7 @@ public final class ConnectionManagerImpl implements ConnectionManager {
         try {
             Class.forName(DRIVER_CLASS_KEY);
         } catch (ClassNotFoundException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

@@ -11,7 +11,7 @@ public interface PersonSectionsRepository {
 
     void update(PersonSection personSection);
 
-    boolean deleteById(int personSectionId);
+    void deleteById(int personSectionId);
 
     boolean exitsById(int personSectionId);
 

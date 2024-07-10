@@ -2,9 +2,7 @@ package by.toukach.restservlet.repository.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.db.ConnectionManagerImpl;
-import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
-import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.repository.PersonSectionsRepository;
 
 
@@ -76,7 +74,7 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
     }
 
     @Override
-    public boolean deleteById(int personSectionId) {
+    public void deleteById(int personSectionId) {
         boolean deleteResult = true;
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
@@ -87,7 +85,6 @@ public class PersonSectionsRepositoryImpl implements PersonSectionsRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return deleteResult;
     }
 
     @Override

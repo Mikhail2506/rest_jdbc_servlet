@@ -31,7 +31,6 @@ public class PhoneNumberMapperImpl implements PhoneNumberMapper {
     public PhoneNumber map(PhoneNumberDTO phoneNumberDTO) {
         return new PhoneNumber(
                 null,
-                //phoneNumberDTO.getPhoneNumberDTOId(),
                 phoneNumberDTO.getNumber()
         );
     }
@@ -39,11 +38,10 @@ public class PhoneNumberMapperImpl implements PhoneNumberMapper {
     @Override
     public PhoneNumberDTO map(PhoneNumber phoneNumber) {
         return new PhoneNumberDTO(
-                //phoneNumber.getPhoneNumberId(),
                 phoneNumber.getNumber()
         );
     }
-
+    @Override
     public List<PhoneNumberDTO> map(List<PhoneNumber> phoneNumberList) {
         List<PhoneNumberDTO> phoneNumberDTOList = new ArrayList<>();
         for (PhoneNumber phoneNumberAdd : phoneNumberList) {

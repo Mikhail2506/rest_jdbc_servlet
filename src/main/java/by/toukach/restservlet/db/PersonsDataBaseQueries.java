@@ -3,24 +3,28 @@ package by.toukach.restservlet.db;
 public class PersonsDataBaseQueries {
 
     public static final String SAVE_PERSON_SQL = """
-            INSERT INTO public.persons (name, surname, age)
-                 VALUES (?, ? ,?);
+            INSERT
+                INTO public.persons (name, surname, age)
+                VALUES (?, ? ,?);
             """;
 
     public static final String SAVE_PERSON_PHONE_NUMBER_SQL = """
-            INSERT INTO phone_numbers (phone, person_id)
-            VALUES (?, ?);
+            INSERT
+                INTO public.phone_numbers (phone, person_id)
+                VALUES (?, ?);
             """;
 
     public static final String SAVE_PERSON_TO_SECTION_SQL = """
-            INSERT INTO person_section (person_id, section_id)
-            VALUES (?, ?);
+            INSERT
+                INTO public.person_section (person_id, section_id)
+                VALUES (?, ?);
             """;
 
     public static final String FIND_SECTION_BY_NAME_SQL = """
-            SELECT id FROM public.sections
-            WHERE section_name = ?
-            LIMIT 1;
+            SELECT
+                id FROM public.sections
+                WHERE section_name = ?
+                LIMIT 1;
             """;
 
     public static final String UPDATE_PERSON_SQL = """
@@ -40,12 +44,12 @@ public class PersonsDataBaseQueries {
 
     public static final String DELETE_PERSON_FROM_SECTIONS_BY_PERSON_ID_SQL = """
             DELETE
-                FROM person_section WHERE person_id = ?;
+                FROM public.person_section WHERE person_id = ?;
             """;
 
     public static final String DELETE_PHONE_NUMBERS_BY_PERSON_ID_SQL = """
             DELETE
-                FROM phone_numbers WHERE person_id = ?;
+                FROM public.phone_numbers WHERE person_id = ?;
             """;
 
     public static final String FIND_PERSON_BY_ID_SQL = """
@@ -72,7 +76,7 @@ public class PersonsDataBaseQueries {
     public static final String EXIST_BY_ID_SQL = """
             SELECT exists (
                 SELECT 1
-                FROM persons
+                FROM public.persons
                 WHERE id = ?
                 LIMIT 1);
             """;

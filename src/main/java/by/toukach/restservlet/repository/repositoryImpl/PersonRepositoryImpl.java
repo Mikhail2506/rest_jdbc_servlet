@@ -192,7 +192,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             }
             for (Integer sectionId : personSectionIdList) {
                 if (personSectionsRepository.exitsById(person.getPersonId())) {
-                    PersonToSection personToSection = new PersonToSection(null, person.getPersonId(), sectionId);
+                    //PersonToSection personToSection = new PersonToSection(null, person.getPersonId(), sectionId);
                     personToSectionRepository.save(person.getPersonId(), sectionId);
                 }
             }
@@ -230,7 +230,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
         if (phoneNumbersRepository.exists(phoneNumber.getNumber())) {
             Optional<PhoneNumber> existNumbers = phoneNumbersRepository.findByNumber(phoneNumber.getNumber());
-            if (existNumbers != null) {
+            if (existNumbers.isPresent()) {
                 phoneNumber = new PhoneNumber(existNumbers.get().getPhoneNumberId(), existNumbers.get().getNumber());
                 phoneNumbersRepository.update(phoneNumber);
             }
@@ -247,7 +247,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                      .prepareStatement(DELETE_PERSON_FROM_SECTIONS_BY_PERSON_ID_SQL);
              PreparedStatement deletePhoneNumbersStatement = connection
                      .prepareStatement(DELETE_PHONE_NUMBERS_BY_PERSON_ID_SQL);
-             PreparedStatement deletePersonStatement = connection.prepareStatement(DELETE_PERSON_BY_ID_SQL);) {
+             PreparedStatement deletePersonStatement = connection.prepareStatement(DELETE_PERSON_BY_ID_SQL)) {
 
             deletePersonFromSectionsStatement.setInt(1, personId);
             deletePersonFromSectionsStatement.executeUpdate();

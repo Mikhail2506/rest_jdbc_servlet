@@ -24,7 +24,6 @@ public class PersonSectionMapperImpl implements PersonSectionMapper {
     public PersonSection map(PersonSectionDTO personSectionDTO) {
         return new PersonSection(
                 null,
-                 //personSectionDTO.getPersonSectionDTOId(),
                 personSectionDTO.getPersonSectionDTOName()
         );
     }
@@ -33,11 +32,10 @@ public class PersonSectionMapperImpl implements PersonSectionMapper {
     public PersonSectionDTO map(PersonSection personSection) {
 
         return new PersonSectionDTO(
-                //personSection.getSectionId(),
                 personSection.getSectionName()
         );
     }
-
+    @Override
     public List<PersonSectionDTO> map(List<PersonSection> personSectionList) {
 
         return personSectionList.stream().map(this::map).toList();

@@ -1,10 +1,6 @@
 package by.toukach.restservlet.servlet;
 
 import by.toukach.restservlet.dto.PersonDTO;
-import by.toukach.restservlet.dto.PersonDTOSave;
-import by.toukach.restservlet.entity.Person;
-import by.toukach.restservlet.mapper.PersonMapper;
-import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
 import by.toukach.restservlet.service.PersonService;
 import by.toukach.restservlet.service.serviceImpl.PersonServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +19,6 @@ import java.util.Optional;
 @WebServlet("/persons/*")
 public class PersonsServlet extends HttpServlet {
 
-    private final PersonMapper personMapper = PersonMapperImpl.getInstance();
     private final PersonService personService = PersonServiceImpl.getInstance();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -112,10 +107,6 @@ public class PersonsServlet extends HttpServlet {
         String responseAnswer = "";
         Optional<PersonDTO> personUpdating;
         try {
-//            String requestURI = req.getRequestURI();
-//            String[] parts = requestURI.split("/");
-//            String parameter = parts[parts.length - 1];
-//            int id = Integer.parseInt(parameter);
             personUpdating = Optional.ofNullable(objectMapper.readValue(json, PersonDTO.class));
             PersonDTO personDTO = personUpdating.orElseThrow(IllegalArgumentException::new);
             personService.updatePerson(personDTO);
@@ -149,28 +140,4 @@ public class PersonsServlet extends HttpServlet {
         printWriter.flush();
     }
 
-    //    public void controllerPut(HttpServletRequest req, HttpServletResponse resp) {
-//        String uri = req.getRequestURI();
-//        switch (uri) {
-//            case "": {
-////                String json = req.getQueryString();
-////                PersonDTO dto = personMapper.mapperJsonToDTO(json);
-////                personService.updatePerson(personMapper.dtoToEntity(dto));
-////                break;
-//
-//
-//                String json = req.getQueryString();
-//                PersonToUpdateDTO dto = personToUpdateDTOMapper.mapperJsonToDTO(json);
-//                personService.updatePerson(dto);
-//
-//
-//                //personService.updatePerson(personMapper.dtoToEntity(dto));
-//                break;
-//            }
-//        }
-//    }
-
-    @Override
-    public void destroy() {
-    }
 }

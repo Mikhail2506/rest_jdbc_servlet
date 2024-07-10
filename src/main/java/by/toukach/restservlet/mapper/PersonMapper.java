@@ -1,7 +1,6 @@
 package by.toukach.restservlet.mapper;
 
 import by.toukach.restservlet.dto.PersonDTO;
-import by.toukach.restservlet.dto.PersonDTOSave;
 import by.toukach.restservlet.entity.Person;
 import org.mapstruct.Mapper;
 
@@ -11,8 +10,6 @@ import java.util.List;
 public interface PersonMapper {
 
     Person map(PersonDTO personDTO);
-
-    Person map(PersonDTOSave personDTOSave);
 
     PersonDTO map(Person person);
 

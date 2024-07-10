@@ -88,9 +88,7 @@ public class Person {
     }
 
     public List<PersonSection> getPersonSectionList() {
-//        if (personSectionList == null) {
-//            this.personSectionList = personToSectionRepository.findSectionByPersonId(this.personId);
-//        }
+
         return personSectionList;
     }
 

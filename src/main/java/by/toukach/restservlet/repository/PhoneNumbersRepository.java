@@ -18,10 +18,4 @@ public interface PhoneNumbersRepository {
     Optional<PhoneNumber> findByNumber(String number);
 
     List<PhoneNumber> findAllByPersonId(int id);
-
-    boolean exitsById(int id);
-
-    Optional<PhoneNumber>findById(int phoneNumberId);
-
-    List<PhoneNumber> findAll();
 }

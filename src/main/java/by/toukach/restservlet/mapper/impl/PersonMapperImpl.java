@@ -1,7 +1,6 @@
 package by.toukach.restservlet.mapper.impl;
 
 import by.toukach.restservlet.dto.PersonDTO;
-import by.toukach.restservlet.dto.PersonDTOSave;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.PersonSectionMapper;
@@ -34,18 +33,6 @@ public class PersonMapperImpl implements PersonMapper {
                 personDTO.getPersonAge(),
                 phoneNumberMapper.mapUpdateList(personDTO.getPhoneNumberDTOList()),
                 personSectionMapper.mapUpdateDTOList(personDTO.getPersonSectionDTOList())
-        );
-    }
-
-    @Override
-    public Person map(PersonDTOSave personDTOSave) {
-        return new Person(
-                null,
-                personDTOSave.getPersonName(),
-                personDTOSave.getPersonSurname(),
-                personDTOSave.getPersonAge(),
-                phoneNumberMapper.mapUpdateList(personDTOSave.getPhoneNumberDTOList()),
-                personSectionMapper.mapUpdateDTOList(personDTOSave.getPersonSectionDTOList())
         );
     }
 
