@@ -1,8 +1,6 @@
 package by.toukach.restservlet.mapper.impl;
 
-import by.toukach.restservlet.dto.PersonSectionDTO;
 import by.toukach.restservlet.dto.PhoneNumberDTO;
-import by.toukach.restservlet.entity.PersonSection;
 import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.PersonSectionMapper;

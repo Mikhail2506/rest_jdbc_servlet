@@ -1,12 +1,6 @@
 package by.toukach.restservlet.entity;
 
-import by.toukach.restservlet.repository.PersonToSectionRepository;
-import by.toukach.restservlet.repository.repositoryImpl.PersonToSectionRepositoryImpl;
-
 public class PersonSection {
-
-    private static final PersonToSectionRepository personToSectionRepository =
-            PersonToSectionRepositoryImpl.getInstance();
 
     Integer sectionId;
     String sectionName;

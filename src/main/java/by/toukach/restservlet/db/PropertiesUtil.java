@@ -1,6 +1,5 @@
 package by.toukach.restservlet.db;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 

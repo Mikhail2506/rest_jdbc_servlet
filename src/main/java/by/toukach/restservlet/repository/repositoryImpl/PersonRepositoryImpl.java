@@ -7,12 +7,9 @@ import by.toukach.restservlet.dto.PersonSectionDTO;
 import by.toukach.restservlet.dto.PhoneNumberDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.entity.PersonSection;
-import by.toukach.restservlet.entity.PersonToSection;
 import by.toukach.restservlet.entity.PhoneNumber;
 import by.toukach.restservlet.repository.PersonRepository;
-import by.toukach.restservlet.repository.PersonSectionsRepository;
-import by.toukach.restservlet.repository.PersonToSectionRepository;
-import by.toukach.restservlet.repository.PhoneNumbersRepository;
+
 
 import java.sql.*;
 import java.util.*;
@@ -22,9 +19,6 @@ import static by.toukach.restservlet.db.PersonsDataBaseQueries.*;
 public class PersonRepositoryImpl implements PersonRepository {
 
     private static PersonRepository instance;
-    private final PersonToSectionRepository personToSectionRepository = PersonToSectionRepositoryImpl.getInstance();
-    private final PhoneNumbersRepository phoneNumbersRepository = PhoneNumbersRepositoryImpl.getInstance();
-    private final PersonSectionsRepository personSectionsRepository = PersonSectionsRepositoryImpl.getInstance();
     private final ConnectionManager connectionManager = ConnectionManagerImpl.getInstance();
 
     private PersonRepositoryImpl() {
@@ -137,7 +131,6 @@ public class PersonRepositoryImpl implements PersonRepository {
             personStatement.setInt(4, person.getPersonId());
             personStatement.executeUpdate();
 
-            // Обновление телефонов персоны
             deletePersonPhoneNumbers(connection, person.getPersonId());
             for (PhoneNumber phoneNumber : person.getPhoneNumbersList()) {
                 phoneNumberStatement.setString(1, String.valueOf(phoneNumber));
@@ -145,7 +138,6 @@ public class PersonRepositoryImpl implements PersonRepository {
                 phoneNumberStatement.executeUpdate();
             }
 
-            // Обновление секций персоны
             deletePersonSections(connection, person.getPersonId());
             for (PersonSection section : person.getPersonSectionList()) {
                 int sectionId = getSectionIdByName(connection, section.getSectionName());
@@ -174,68 +166,6 @@ public class PersonRepositoryImpl implements PersonRepository {
         try (PreparedStatement statement = connection.prepareStatement(DELETE_PERSON_FROM_SECTIONS_BY_PERSON_ID_SQL)) {
             statement.setInt(1, personId);
             statement.executeUpdate();
-        }
-    }
-
-    private void savePersonsSections(Person person) {
-        if (person.getPersonSectionList() != null && !person.getPersonSectionList().isEmpty()) {
-            List<Integer> personSectionIdList = new ArrayList<>(person.getPersonSectionList()
-                    .stream().map(PersonSection::getSectionId).toList());
-
-            List<PersonToSection> existsSectionList = personToSectionRepository
-                    .findAllByPersonId(person.getPersonId());
-            for (PersonToSection per : existsSectionList) {
-                if (!personSectionIdList.contains(per.getSectionId())) {
-                    personSectionsRepository.deleteById(person.getPersonId());
-                }
-                personSectionIdList.remove(person.getPersonId());
-            }
-            for (Integer sectionId : personSectionIdList) {
-                if (personSectionsRepository.exitsById(person.getPersonId())) {
-                    //PersonToSection personToSection = new PersonToSection(null, person.getPersonId(), sectionId);
-                    personToSectionRepository.save(person.getPersonId(), sectionId);
-                }
-            }
-        } else {
-            personToSectionRepository.deleteByPersonId(person.getPersonId());
-        }
-    }
-
-    private void savePersonPhoneNumbers(Person person) {
-        if (person.getPhoneNumbersList() != null && !person.getPhoneNumbersList().isEmpty()) {
-            List<PhoneNumber> phoneNumberList = new ArrayList<>(person.getPhoneNumbersList());
-            List<Integer> existsPhoneNumberIdList = new ArrayList<>(phoneNumbersRepository
-                    .findAllByPersonId(person.getPersonId()).stream().map(PhoneNumber::getPhoneNumberId).toList());
-
-            for (int i = 0; i < phoneNumberList.size(); i++) {
-                PhoneNumber phoneNumber = phoneNumberList.get(i);
-                if (existsPhoneNumberIdList.contains(phoneNumber.getPhoneNumberId())) {
-                    phoneNumbersRepository.update(phoneNumber);
-                } else {
-                    saveOrUpdateExitsNumber(phoneNumber);
-                }
-                phoneNumberList.set(i, null);
-                existsPhoneNumberIdList.remove(phoneNumber.getPhoneNumberId());
-            }
-            phoneNumberList.stream().filter(Objects::nonNull).forEach(phoneNumber -> {
-                phoneNumbersRepository.save(phoneNumber);
-            });
-            existsPhoneNumberIdList.stream().forEach(phoneNumbersRepository::deleteById);
-        } else {
-            phoneNumbersRepository.deleteById(person.getPersonId());
-        }
-    }
-
-    private void saveOrUpdateExitsNumber(PhoneNumber phoneNumber) {
-
-        if (phoneNumbersRepository.exists(phoneNumber.getNumber())) {
-            Optional<PhoneNumber> existNumbers = phoneNumbersRepository.findByNumber(phoneNumber.getNumber());
-            if (existNumbers.isPresent()) {
-                phoneNumber = new PhoneNumber(existNumbers.get().getPhoneNumberId(), existNumbers.get().getNumber());
-                phoneNumbersRepository.update(phoneNumber);
-            }
-        } else {
-            phoneNumbersRepository.save(phoneNumber);
         }
     }
 
