@@ -4,6 +4,7 @@ import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonRepository {
 
@@ -13,7 +14,7 @@ public interface PersonRepository {
 
     void deletePersonById(int personId);
 
-    Person findById(int id);
+    Optional<Person> findById(int id);
 
     List<Person> findAll();
 

@@ -1,4 +1,4 @@
-package by.toukach.restservlet.repository.repositoryImpl;
+package by.toukach.restservlet.repositoryImpl;
 
 import by.toukach.restservlet.db.ConnectionManager;
 import by.toukach.restservlet.db.ConnectionManagerImpl;
@@ -194,7 +194,7 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     @Override
-    public Person findById(int id) {
+    public Optional<Person> findById(int id) {
         Person person = new Person();
         person.setPhoneNumbersList(new ArrayList<>());
         person.setPersonSection(new ArrayList<>());
@@ -247,7 +247,7 @@ public class PersonRepositoryImpl implements PersonRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return person;
+        return Optional.of(person);
     }
 
     @Override
@@ -309,7 +309,8 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     public boolean existById(int id) {
         boolean isExists = false;
-        try (Connection connection = connectionManager.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
+        try (Connection connection = connectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(EXIST_BY_ID_SQL)) {
 
             preparedStatement.setInt(1, id);
 

@@ -9,64 +9,65 @@ import by.toukach.restservlet.mapper.PhoneNumberMapper;
 import java.util.*;
 
 public class PersonMapperImpl implements PersonMapper {
-    private static final PhoneNumberMapper phoneNumberMapper = PhoneNumberMapperImpl.getInstance();
-    private static final PersonSectionMapper personSectionMapper = PersonSectionMapperImpl.getInstance();
 
-    private static PersonMapper instance;
+  private static final PhoneNumberMapper phoneNumberMapper = PhoneNumberMapperImpl.getInstance();
+  private static final PersonSectionMapper personSectionMapper = PersonSectionMapperImpl.getInstance();
 
-    private PersonMapperImpl() {
+  private static PersonMapper instance;
+
+  private PersonMapperImpl() {
+  }
+
+  public static synchronized PersonMapper getInstance() {
+    if (instance == null) {
+      instance = new PersonMapperImpl();
     }
+    return instance;
+  }
 
-    public static synchronized PersonMapper getInstance() {
-        if (instance == null) {
-            instance = new PersonMapperImpl();
-        }
-        return instance;
+  @Override
+  public Person map(PersonDTO personDTO) {
+    return new Person(
+        personDTO.getPersonId(),
+        personDTO.getPersonName(),
+        personDTO.getPersonSurname(),
+        personDTO.getPersonAge(),
+        phoneNumberMapper.mapUpdateList(personDTO.getPhoneNumberDTOList()),
+        personSectionMapper.mapUpdateDTOList(personDTO.getPersonSectionDTOList())
+    );
+  }
+
+  @Override
+  public PersonDTO map(Person person) {
+    return new PersonDTO(
+        person.getPersonId(),
+        person.getPersonName(),
+        person.getPersonSurname(),
+        person.getPersonAge(),
+        phoneNumberMapper.map(person.getPhoneNumbersList()),
+        personSectionMapper.map(person.getPersonSectionList())
+    );
+  }
+
+  @Override
+  public List<Person> mapUpdateList(List<PersonDTO> personDTODTOList) {
+
+    List<Person> personList = new ArrayList<>();
+    for (PersonDTO personDTOAdd : personDTODTOList) {
+      Person person = map(personDTOAdd);
+      personList.add(person);
     }
+    return personList;
+  }
 
-    @Override
-    public Person map(PersonDTO personDTO) {
-        return new Person(
-                personDTO.getPersonId(),
-                personDTO.getPersonName(),
-                personDTO.getPersonSurname(),
-                personDTO.getPersonAge(),
-                phoneNumberMapper.mapUpdateList(personDTO.getPhoneNumberDTOList()),
-                personSectionMapper.mapUpdateDTOList(personDTO.getPersonSectionDTOList())
-        );
+  @Override
+  public List<PersonDTO> map(List<Person> personList) {
+
+    List<PersonDTO> personDTOList = new ArrayList<>();
+    for (Person personTOAdd : personList) {
+      PersonDTO personDTO = map(personTOAdd);
+      personDTOList.add(personDTO);
     }
-
-    @Override
-    public PersonDTO map(Person person) {
-        return new PersonDTO(
-                person.getPersonId(),
-                person.getPersonName(),
-                person.getPersonSurname(),
-                person.getPersonAge(),
-                phoneNumberMapper.map(person.getPhoneNumbersList()),
-                personSectionMapper.map(person.getPersonSectionList())
-        );
-    }
-
-    @Override
-    public List<Person> mapUpdateList(List<PersonDTO> personDTODTOList) {
-
-        List<Person> personList = new ArrayList<>();
-        for (PersonDTO personDTOAdd : personDTODTOList) {
-            Person person = map(personDTOAdd);
-            personList.add(person);
-        }
-        return personList;
-    }
-
-    @Override
-    public List<PersonDTO> map(List<Person> personList) {
-
-        List<PersonDTO> personDTOList = new ArrayList<>();
-        for (Person personTOAdd : personList) {
-            PersonDTO personDTO = map(personTOAdd);
-            personDTOList.add(personDTO);
-        }
-        return personDTOList;
-    }
+    return personDTOList;
+  }
 }

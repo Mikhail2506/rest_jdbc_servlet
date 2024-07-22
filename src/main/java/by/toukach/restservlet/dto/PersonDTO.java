@@ -19,7 +19,8 @@ public class PersonDTO {
     public PersonDTO() {
     }
 
-    public PersonDTO(Integer personId, String personName, String personSurname, int personAge,
+    public PersonDTO(Integer personId,
+         String personName, String personSurname, int personAge,
                      List<PhoneNumberDTO> phoneNumberDTOList, List<PersonSectionDTO> personSectionDTOList) {
         this.personId = personId;
         this.personName = personName;

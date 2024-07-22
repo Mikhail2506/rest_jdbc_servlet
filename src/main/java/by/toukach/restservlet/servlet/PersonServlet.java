@@ -2,7 +2,7 @@ package by.toukach.restservlet.servlet;
 
 import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.service.PersonService;
-import by.toukach.restservlet.service.serviceImpl.PersonServiceImpl;
+import by.toukach.restservlet.serviceImpl.PersonServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/persons/*")
-public class PersonsServlet extends HttpServlet {
+public class PersonServlet extends HttpServlet {
 
     private final PersonService personService = PersonServiceImpl.getInstance();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = new ObjectMapper();
 
-    public PersonsServlet() {
+    public PersonServlet() {
     }
 
     private static void setJsonHeader(HttpServletResponse resp) {

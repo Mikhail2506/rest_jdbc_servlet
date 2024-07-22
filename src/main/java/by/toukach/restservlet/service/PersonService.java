@@ -12,7 +12,7 @@ public interface PersonService {
 
     List<PersonDTO> readPersons()throws SQLException;
 
-   PersonDTO readPerson(int personId) throws SQLException;
+   PersonDTO readPerson(int personId) throws SQLException, NotFoundException;
 
     void deletePerson(int PersonId);
 

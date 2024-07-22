@@ -1,7 +1,7 @@
 package by.toukach.restservlet.entity;
 
 import by.toukach.restservlet.repository.PersonRepository;
-import by.toukach.restservlet.repository.repositoryImpl.PersonRepositoryImpl;
+import by.toukach.restservlet.repositoryImpl.PersonRepositoryImpl;
 
 public class PhoneNumber {
 
