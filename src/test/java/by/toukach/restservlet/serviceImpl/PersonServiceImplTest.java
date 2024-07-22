@@ -8,7 +8,8 @@ import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
 import by.toukach.restservlet.exception.NotFoundException;
 import by.toukach.restservlet.repository.PersonRepository;
-import by.toukach.restservlet.repositoryImpl.PersonRepositoryImpl;
+import by.toukach.restservlet.repository.Impl.PersonRepositoryImpl;
+import by.toukach.restservlet.service.Impl.PersonServiceImpl;
 import by.toukach.restservlet.service.PersonService;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
@@ -110,7 +111,8 @@ class PersonServiceImplTest {
   void readPerson() throws NotFoundException, SQLException {
     int expectedId = 1;
 
-    Optional<Person> person =  Optional.of(new Person(expectedId, "f1 name", "l1 name", 43, List.of(), List.of()));
+    Optional<Person> person = Optional.of(
+        new Person(expectedId, "f1 name", "l1 name", 43, List.of(), List.of()));
 
     Mockito.doReturn(true).when(mockPersonRepository).existById(Mockito.anyInt());
     Mockito.doReturn(person).when(mockPersonRepository).findById(Mockito.anyInt());

@@ -2,28 +2,28 @@ package by.toukach.restservlet.entity;
 
 public class PersonSection {
 
-    Integer sectionId;
-    String sectionName;
+  Integer sectionId;
+  String sectionName;
 
-    public PersonSection() {
-    }
+  public PersonSection() {
+  }
 
-    public PersonSection(Integer sectionId, String sectionName) {
-        this.sectionId = sectionId;
-        this.sectionName = sectionName;
-    }
+  public PersonSection(Integer sectionId, String sectionName) {
+    this.sectionId = sectionId;
+    this.sectionName = sectionName;
+  }
 
-    public Integer getSectionId() {
-        return sectionId;
-    }
+  public Integer getSectionId() {
+    return sectionId;
+  }
 
-    public String getSectionName() {
-        return sectionName;
-    }
+  public String getSectionName() {
+    return sectionName;
+  }
 
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
-    }
+  public void setSectionName(String sectionName) {
+    this.sectionName = sectionName;
+  }
 }
 
 

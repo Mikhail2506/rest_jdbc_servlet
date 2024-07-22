@@ -8,16 +8,16 @@ import java.util.Optional;
 
 public interface PersonRepository {
 
-    Person save(PersonDTO person);
+  Person save(PersonDTO person);
 
-    void update(Person person);
+  void update(Person person);
 
-    void deletePersonById(int personId);
+  void deletePersonById(int personId);
 
-    Optional<Person> findById(int id);
+  Optional<Person> findById(int id);
 
-    List<Person> findAll();
+  List<Person> findAll();
 
-    boolean existById(int id);
+  boolean existById(int id);
 
 }

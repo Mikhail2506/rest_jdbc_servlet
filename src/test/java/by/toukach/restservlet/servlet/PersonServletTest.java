@@ -1,20 +1,13 @@
 package by.toukach.restservlet.servlet;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.exception.NotFoundException;
 import by.toukach.restservlet.service.PersonService;
-import by.toukach.restservlet.serviceImpl.PersonServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
+import by.toukach.restservlet.service.Impl.PersonServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -47,7 +40,6 @@ class PersonServletTest {
   private HttpServletResponse mockResponse;
 
 
-  private ObjectMapper objectMapper;
   private StringWriter stringWriter;
   private PrintWriter writer;
 
@@ -79,7 +71,6 @@ class PersonServletTest {
   @BeforeEach
   void setUp() throws IOException {
 
-    objectMapper = new ObjectMapper();
     stringWriter = new StringWriter();
     writer = new PrintWriter(stringWriter);
     when(mockResponse.getWriter()).thenReturn(writer);
@@ -104,7 +95,7 @@ class PersonServletTest {
 
   @Test
   void testDoGetSinglePersonFound()
-      throws IOException, NotFoundException, SQLException, ServletException {
+      throws IOException, NotFoundException, SQLException {
     Mockito.doReturn("persons/2").when(mockRequest).getRequestURI();
 
     personServlet.doGet(mockRequest, mockResponse);
@@ -113,7 +104,7 @@ class PersonServletTest {
   }
 
   @Test
-  void doGetBadRequest() throws IOException, ServletException {
+  void doGetBadRequest() throws IOException {
     Mockito.doReturn("persons/2q").when(mockRequest).getRequestURI();
 
     personServlet.doGet(mockRequest, mockResponse);
@@ -122,8 +113,7 @@ class PersonServletTest {
   }
 
   @Test
-  void testDoGetSinglePersonNotFound()
-      throws ServletException, IOException, SQLException, NotFoundException {
+  void testDoGetSinglePersonNotFound() throws IOException, SQLException, NotFoundException {
 
     when(mockRequest.getRequestURI()).thenReturn("persons/1");
 
@@ -143,7 +133,7 @@ class PersonServletTest {
     personServlet.doGet(mockRequest, mockResponse);
 
     verify(mockResponse).setStatus(HttpServletResponse.SC_BAD_REQUEST);
-    assertEquals("Invalid ID format.", stringWriter.toString());
+    Assertions.assertEquals("Invalid ID format.", stringWriter.toString());
   }
 
   @Test
@@ -155,6 +145,6 @@ class PersonServletTest {
     personServlet.doGet(mockRequest, mockResponse);
 
     verify(mockResponse).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    assertEquals("Internal server error.", stringWriter.toString());
+    Assertions.assertEquals("Internal server error.", stringWriter.toString());
   }
 }

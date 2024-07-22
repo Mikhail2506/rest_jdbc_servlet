@@ -9,12 +9,12 @@ import java.util.List;
 @Mapper
 public interface PhoneNumberMapper {
 
-    PhoneNumber map(PhoneNumberDTO phoneNumberDTO);
+  PhoneNumber map(PhoneNumberDTO phoneNumberDTO);
 
-    PhoneNumberDTO map(PhoneNumber phoneNumber);
+  PhoneNumberDTO map(PhoneNumber phoneNumber);
 
-    List<PhoneNumberDTO> map(List<PhoneNumber> phoneNumberList);
+  List<PhoneNumberDTO> map(List<PhoneNumber> phoneNumberList);
 
-    List<PhoneNumber> mapUpdateList(List<PhoneNumberDTO> phoneNumberDTOList);
+  List<PhoneNumber> mapUpdateList(List<PhoneNumberDTO> phoneNumberDTOList);
 
 }

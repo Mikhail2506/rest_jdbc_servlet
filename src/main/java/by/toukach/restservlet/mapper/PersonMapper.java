@@ -9,12 +9,12 @@ import java.util.List;
 @Mapper
 public interface PersonMapper {
 
-    Person map(PersonDTO personDTO);
+  Person map(PersonDTO personDTO);
 
-    PersonDTO map(Person person);
+  PersonDTO map(Person person);
 
-    List<Person> mapUpdateList(List<PersonDTO> personDTODTOList);
+  List<Person> mapUpdateList(List<PersonDTO> personDTODTOList);
 
-    List<PersonDTO> map(List<Person> personList);
+  List<PersonDTO> map(List<Person> personList);
 
 }

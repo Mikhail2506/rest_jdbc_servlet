@@ -9,6 +9,7 @@ import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.dto.PersonSectionDTO;
 import by.toukach.restservlet.dto.PhoneNumberDTO;
 import by.toukach.restservlet.entity.Person;
+import by.toukach.restservlet.repository.Impl.PersonRepositoryImpl;
 import by.toukach.restservlet.repository.PersonRepository;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
@@ -29,7 +30,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class PersonRepositoryImplTest {
+class PersonRepositoryTest {
 
   private static final String INIT_SQL = "sql/schema.sql";
   private static final int containerPort = 5432;

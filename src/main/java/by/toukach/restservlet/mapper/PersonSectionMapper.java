@@ -9,11 +9,11 @@ import java.util.List;
 @Mapper
 public interface PersonSectionMapper {
 
-    PersonSection map(PersonSectionDTO personSectionDTO);
+  PersonSection map(PersonSectionDTO personSectionDTO);
 
-    PersonSectionDTO map(PersonSection personSection);
+  PersonSectionDTO map(PersonSection personSection);
 
-    List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList);
+  List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList);
 
-    List<PersonSectionDTO> map(List<PersonSection> personSectionList);
+  List<PersonSectionDTO> map(List<PersonSection> personSectionList);
 }

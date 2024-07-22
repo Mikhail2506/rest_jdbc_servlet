@@ -8,42 +8,43 @@ import java.util.List;
 
 public class PersonSectionMapperImpl implements PersonSectionMapper {
 
-    private static PersonSectionMapper instance;
+  private static PersonSectionMapper instance;
 
-    private PersonSectionMapperImpl() {
+  private PersonSectionMapperImpl() {
+  }
+
+  public static synchronized PersonSectionMapper getInstance() {
+    if (instance == null) {
+      instance = new PersonSectionMapperImpl();
     }
+    return instance;
+  }
 
-    public static synchronized PersonSectionMapper getInstance() {
-        if (instance == null) {
-            instance = new PersonSectionMapperImpl();
-        }
-        return instance;
-    }
+  @Override
+  public PersonSection map(PersonSectionDTO personSectionDTO) {
+    return new PersonSection(
+        null,
+        personSectionDTO.getPersonSectionDTOName()
+    );
+  }
 
-    @Override
-    public PersonSection map(PersonSectionDTO personSectionDTO) {
-        return new PersonSection(
-                null,
-                personSectionDTO.getPersonSectionDTOName()
-        );
-    }
+  @Override
+  public PersonSectionDTO map(PersonSection personSection) {
 
-    @Override
-    public PersonSectionDTO map(PersonSection personSection) {
+    return new PersonSectionDTO(
+        personSection.getSectionName()
+    );
+  }
 
-        return new PersonSectionDTO(
-                personSection.getSectionName()
-        );
-    }
-    @Override
-    public List<PersonSectionDTO> map(List<PersonSection> personSectionList) {
+  @Override
+  public List<PersonSectionDTO> map(List<PersonSection> personSectionList) {
 
-        return personSectionList.stream().map(this::map).toList();
-    }
+    return personSectionList.stream().map(this::map).toList();
+  }
 
-    @Override
-    public List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList) {
+  @Override
+  public List<PersonSection> mapUpdateDTOList(List<PersonSectionDTO> personSectionDTOList) {
 
-        return personSectionDTOList.stream().map(this::map).toList();
-    }
+    return personSectionDTOList.stream().map(this::map).toList();
+  }
 }

@@ -1,4 +1,4 @@
-package by.toukach.restservlet.serviceImpl;
+package by.toukach.restservlet.service.Impl;
 
 import by.toukach.restservlet.dto.PersonDTO;
 import by.toukach.restservlet.entity.Person;
@@ -6,10 +6,9 @@ import by.toukach.restservlet.exception.NotFoundException;
 import by.toukach.restservlet.mapper.PersonMapper;
 import by.toukach.restservlet.mapper.impl.PersonMapperImpl;
 import by.toukach.restservlet.repository.PersonRepository;
-import by.toukach.restservlet.repositoryImpl.PersonRepositoryImpl;
+import by.toukach.restservlet.repository.Impl.PersonRepositoryImpl;
 import by.toukach.restservlet.service.PersonService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class PersonServiceImpl implements PersonService {
@@ -36,13 +35,13 @@ public class PersonServiceImpl implements PersonService {
   }
 
   @Override
-  public List<PersonDTO> readPersons() throws SQLException {
+  public List<PersonDTO> readPersons() {
     List<Person> all = personRepository.findAll();
     return personMapper.map(all);
   }
 
   @Override
-  public PersonDTO readPerson(int id) throws SQLException, NotFoundException {
+  public PersonDTO readPerson(int id) throws NotFoundException {
     checkExistPerson(id);
     Person person = personRepository.findById(id).orElseThrow();
     return personMapper.map(person);
@@ -60,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
 
   @Override
   public void updatePerson(PersonDTO personDTO) throws NotFoundException {
-    if (personDTO == null || personDTO.getPersonId() == null) {
+    if ((personDTO == null) || (personDTO.getPersonId() == null)) {
       throw new NotFoundException(
           "Person with name " + personDTO.getPersonName() + " does not exist in Data Base!");
     }
