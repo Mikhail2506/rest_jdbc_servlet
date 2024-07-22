@@ -2,8 +2,8 @@ package by.toukach.restservlet.entity;
 
 public class PersonSection {
 
-  Integer sectionId;
-  String sectionName;
+  private Integer sectionId;
+  private String sectionName;
 
   public PersonSection() {
   }
